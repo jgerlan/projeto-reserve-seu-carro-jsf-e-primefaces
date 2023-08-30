@@ -11,5 +11,4 @@ public class Carros extends RepositorioCRUD<Carro, Long> {
 	public Carros(EntityManager entityManager) {
 		super(Carro.class, entityManager);
 	}
-
 }
