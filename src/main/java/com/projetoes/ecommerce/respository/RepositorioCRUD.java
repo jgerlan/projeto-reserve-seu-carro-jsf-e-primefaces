@@ -1,3 +1,4 @@
+
 package com.projetoes.ecommerce.respository;
 
 import java.util.List;
@@ -11,15 +12,15 @@ public abstract class RepositorioCRUD<T, ID> implements IRepositorioCRUD<T, ID> 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	protected EntityManager manager;
+	private EntityManager manager;
 
-    private final Class<T> entityClass;
-    
-    public RepositorioCRUD(Class<T> entityClass, EntityManager manager) {
-        this.manager = manager;
-        this.entityClass = entityClass;
-    }
-	
+	private final Class<T> entityClass;
+
+	public RepositorioCRUD(Class<T> entityClass, EntityManager manager) {
+		this.manager = manager;
+		this.entityClass = entityClass;
+	}
+
 	@Override
 	public T porId(ID id) {
 		return manager.find(entityClass, id);
@@ -46,9 +47,9 @@ public abstract class RepositorioCRUD<T, ID> implements IRepositorioCRUD<T, ID> 
 	@Override
 	public void remover(ID id) {
 		T entity = manager.find(entityClass, id);
-        if (entity != null) {
-        	manager.remove(entity);
-        }
+		if (entity != null) {
+			manager.remove(entity);
+		}
 	}
 
 }
