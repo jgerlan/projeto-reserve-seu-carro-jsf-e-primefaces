@@ -2,11 +2,57 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
  	xmlns:h="http://xmlns.jcp.org/jsf/html"
  	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<head>
+<h:head>
 <meta charset="UTF-8"/>
 <title>Home</title>
-</head>
+
+<h:outputStylesheet library="projetoes" name="estilo.css"/>
+</h:head>
 <body>
-	<h:outputText value="Olá Mundo! :D"></h:outputText>
+	<header>
+		<h:graphicImage library="projetoes" name="reserve-seu-carro-logo-texto.png"  width="180" height="24"/>
+	</header>
+
+	<!-- <h:outputText value="Olá Mundo! :D"></h:outputText> -->
+	
+	<div id="conteudo">
+		<h:dataTable value="#{[0, 0, 0, 0]}">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Marca" />
+				</f:facet>
+				
+				<h:outputText value="Ford" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Modelo" />
+				</f:facet>
+				
+				<h:outputText value="EcoSport" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Valor" />
+				</f:facet>
+				
+				<h:outputText value="R$ 90000.00" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Descrição" />
+				</f:facet>
+				
+				<h:outputText value="Compact SUV" />
+			</h:column>
+		</h:dataTable>
+	</div>
+	
+	<footer>
+		Reserve seu carro - 2023
+	</footer>
 </body>
 </html>

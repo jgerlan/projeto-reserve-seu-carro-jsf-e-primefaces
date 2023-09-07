@@ -14,7 +14,7 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<!-- <context-param>
+	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
@@ -22,7 +22,7 @@
 	<context-param>
 		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
 		<param-value>0</param-value>
-	</context-param> -->
+	</context-param>
 
 	<resource-env-ref>
 		<resource-env-ref-name>BeanManager</resource-env-ref-name>
