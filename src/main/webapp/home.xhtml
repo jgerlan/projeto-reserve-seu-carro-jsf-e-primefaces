@@ -9,7 +9,7 @@
 
 <h:outputStylesheet library="projetoes" name="estilo.css"/>
 
-<f:metadata>
+	<f:metadata>
 		<f:viewAction action="#{gestaoCarrosBean.todosCarros}" />
 	</f:metadata>
 
@@ -41,7 +41,8 @@
 		</p:dataTable> -->
 		
 		<p:dataTable value="#{gestaoCarrosBean.listaCarros}"
-			var = "carro" emptyMessage="Nenhum registro encontrado.">
+			var = "carro" emptyMessage="Nenhum registro encontrado."
+			paginator="true" rows="10" paginatorPosition="bottom">
 			<p:column headerText="Marca">
 				<h:outputText value="#{carro.marca}" />
 			</p:column>
