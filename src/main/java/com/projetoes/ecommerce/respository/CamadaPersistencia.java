@@ -2,6 +2,7 @@ package com.projetoes.ecommerce.respository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.projetoes.ecommerce.model.Carro;
+import com.projetoes.ecommerce.model.DadosCadastroVo;
 
 public class CamadaPersistencia {
 	
@@ -41,6 +43,13 @@ public class CamadaPersistencia {
 		carro.setValor(245990.00);
 		carro.setDescricao("Comfortable sedan");
 		
+		DadosCadastroVo dadosCadastroVo = new DadosCadastroVo();
+		dadosCadastroVo.setUsuarioIdCriacao(1);
+		dadosCadastroVo.setDataCriacao(new Date());
+		dadosCadastroVo.setUsuarioIdAtualizacao(dadosCadastroVo.getUsuarioIdCriacao());
+		dadosCadastroVo.setDataAtualizacao(dadosCadastroVo.getDataCriacao());
+		
+		carro.setDadosCadastro(dadosCadastroVo);
 		
 		//Salvando o carro
 		Carro retornoCarro = carros.guardar(carro);

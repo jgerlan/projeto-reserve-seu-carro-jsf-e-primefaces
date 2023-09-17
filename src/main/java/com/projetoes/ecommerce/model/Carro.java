@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +42,9 @@ public class Carro implements Serializable {
 	
 	@Column(nullable = true, length = 300)
 	private String descricao;
+	
+	@Embedded
+	DadosCadastroVo dadosCadastro;
 	
 	public long getId() {
 		return id;
@@ -95,6 +99,13 @@ public class Carro implements Serializable {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public DadosCadastroVo getDadosCadastro() {
+		return dadosCadastro;
+	}
+	public void setDadosCadastro(DadosCadastroVo dadosCadastro) {
+		this.dadosCadastro = dadosCadastro;
 	}
 
 	@Override
