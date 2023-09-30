@@ -20,6 +20,10 @@ public abstract class RepositorioCRUD<T, ID> implements IRepositorioCRUD<T, ID> 
 		this.manager = manager;
 		this.entityClass = entityClass;
 	}
+	
+	protected EntityManager getEntityManager() {
+        return this.manager;
+    }
 
 	@Override
 	public T porId(ID id) {
@@ -29,13 +33,6 @@ public abstract class RepositorioCRUD<T, ID> implements IRepositorioCRUD<T, ID> 
 	@Override
 	public List<T> listarTodos() {
 		TypedQuery<T> query = manager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass);
-		return query.getResultList();
-	}
-
-	@Override
-	public List<T> pesquisar(String atributo) {
-		TypedQuery<T> query = manager.createQuery("from Carro where modelo like ?1 ", entityClass);
-		query.setParameter(1, "%" + atributo + "%");
 		return query.getResultList();
 	}
 

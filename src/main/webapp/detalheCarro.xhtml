@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo">
+		Detalhes carro
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form>
+			<p:commandButton icon="pi pi-chevron-left"
+				action="#{gestaoHomeBean.index}" title="Voltar">
+			</p:commandButton>
+			<div class="info-container">
+				<div class="car-info">
+					<h:graphicImage library="projetoes"
+						name="reserve-seu-carro-logo-gray.png" />
+					<h2>Informações do Carro</h2>
+					<p>Marca: #{gestaoCarrosBean.carro.marca}</p>
+					<p>Modelo: #{gestaoCarrosBean.carro.modelo}</p>
+					<p>Ano Fabricação: #{gestaoCarrosBean.carro.anoFabricacao}</p>
+					<p>Ano Modelo: #{gestaoCarrosBean.carro.anoModelo}</p>
+					<p>Valor: #{gestaoCarrosBean.carro.valor}</p>
+					<p>Descrição: #{gestaoCarrosBean.carro.descricao}</p>
+				</div>
+				<div class="reservation-info">
+					<h2>Sua reserva</h2>
+					<p>Clique no botão abaixo para confirmar:</p>
+
+					<p:commandButton type="button" value="Confirmar Reserva"
+						styleClass="ui-button-success" />
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

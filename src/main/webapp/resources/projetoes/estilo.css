@@ -4,7 +4,11 @@ body {
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
-	font-weight: normal
+	font-weight: normal;
+	background-color: #f0f0f0;
+	margin: 0;
+    padding: 0;
+    min-height: 100vh;
 }
 
 header {
@@ -41,3 +45,71 @@ header img {
     height: 32px;
 }
 
+.ui-datatable table th.ui-column-custom {
+    width: 5%;
+}
+
+.ui-datatable .ui-button {
+	margin-right:20px;
+}
+
+.carro-image img {
+	width: 32px;
+    height: 32px;
+}
+
+/*@media (max-width: 905px) {
+    .ui-datatable .ui-button .ui-button-text {
+        font-size: 0;
+    }
+    .ui-datatable .ui-button {
+		 width: 41%;
+	}
+}*/
+
+
+/* Parent container for car-info and reservation-info */
+.info-container {
+    display: flex;
+    flex-direction: row; /* Make them side by side */
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align to the top */
+}
+
+/* Estilos para a informação do carro */
+.car-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-right: 20px; /* Add space between the divs */
+}
+
+.car-info img {
+	width: 60%;
+    height: 60%;
+}
+
+/* Estilos para o div com "Sua reserva" */
+.reservation-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilos para o botão verde */
+.green-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form .ui-inputfield{
+    margin-right: 10px;
+}

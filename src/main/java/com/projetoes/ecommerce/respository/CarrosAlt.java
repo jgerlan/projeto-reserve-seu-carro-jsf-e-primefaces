@@ -27,7 +27,6 @@ public class CarrosAlt implements IRepositorioCRUD<Carro, Long> {
 		return manager.find(Carro.class, id);
 	}
 
-	@Override
 	public List<Carro> pesquisar(String modelo) {
 		TypedQuery<Carro> query = manager.createQuery("from Carro where modelo like ?1 ", Carro.class);
 		query.setParameter(1, "%" + modelo + "%");

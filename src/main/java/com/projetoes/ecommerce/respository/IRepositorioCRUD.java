@@ -9,8 +9,6 @@ public interface IRepositorioCRUD<T, ID> extends Serializable {
 	
 	public List<T> listarTodos();
 
-	public List<T> pesquisar(String atributo);
-
 	public T guardar(T entity);
 
 	public void remover(ID id);
