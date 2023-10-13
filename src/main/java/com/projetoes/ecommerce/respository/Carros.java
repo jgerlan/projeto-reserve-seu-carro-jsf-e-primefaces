@@ -18,8 +18,8 @@ public class Carros extends RepositorioCRUD<Carro, Long> {
 	}
 	
 	public List<Carro> pesquisar(String marca) {
-		TypedQuery<Carro> query = getEntityManager().createQuery("from Carro where marca like ?1 ", Carro.class);
-		query.setParameter(1, "%" + marca + "%");
+		TypedQuery<Carro> query = getEntityManager().createQuery("from Carro where LOWER(marca) like ?1 ", Carro.class);
+		query.setParameter(1, "%" + marca.toLowerCase() + "%");
 		
 		return query.getResultList();
 	}
