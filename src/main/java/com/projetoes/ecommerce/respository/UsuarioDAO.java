@@ -15,9 +15,9 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		super(Usuario.class, entityManager);
 	}
 		
-	public List<Usuario> pesquisar(String marca) {
-	TypedQuery<Usuario> query = getEntityManager().createQuery("from Usuario where marca like ?1 ", Usuario.class);
-	query.setParameter(1, "%" + marca + "%");
+	public List<Usuario> pesquisar(String nome) {
+	TypedQuery<Usuario> query = getEntityManager().createQuery("from Usuario where nome like ?1 ", Usuario.class);
+	query.setParameter(1, "%" + nome + "%");
 			
 	return query.getResultList();
 	}
