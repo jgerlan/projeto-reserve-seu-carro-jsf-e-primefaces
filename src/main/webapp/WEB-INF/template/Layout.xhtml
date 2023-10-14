@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
- 	xmlns:h="http://xmlns.jcp.org/jsf/html"
- 	xmlns:f="http://xmlns.jcp.org/jsf/core"
- 	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 
-<meta charset="UTF-8"/>
-<title>Reserve seu carro</title>
+	<meta charset="UTF-8" />
+	<title>Reserve seu carro</title>
 
-<h:outputStylesheet library="projetoes" name="estilo.css"/>
+	<h:outputStylesheet library="projetoes" name="estilo.css" />
 
 </h:head>
 
 <body>
 	<header>
-		<h:graphicImage library="projetoes" name="reserve-seu-carro-logo-texto.png" />
-		<div>Home</div>
+		<h:form id="frmnavbar" class="frmnavbar">
+			<div class="navbar-content">
+				<p:menubar styleClass="menubar-custom" id="menubar">
+					<p:menuitem disabled="true">
+						<h:graphicImage library="projetoes"
+							name="reserve-seu-carro-logo-texto.png" />
+					</p:menuitem>
+					<p:menuitem action="#{gestaoHomeBean.index}" value="Home" />
+					<p:menuitem value="Cadastro carro" />
+
+					<f:facet name="options" id="options">
+						<p:button value="Login" icon="pi pi-fw pi-sign-in"
+							styleClass="ui-button-info" />
+						
+						<p:button value="Criar usuário" icon="pi pi-fw pi-user-plus"
+							styleClass="ui-button-info" />
+					</f:facet>
+				</p:menubar>
+			</div>
+		</h:form>
 	</header>
 
 	<h2>
 		<ui:insert name="titulo" />
 	</h2>
-	
+
 	<div id="conteudo">
 		<ui:insert name="conteudo" />
 	</div>
-	
-	<footer>
-		Reserve seu carro - 2023
-	</footer>
+
+	<footer> Reserve seu carro - 2023 </footer>
 </body>
 </html>

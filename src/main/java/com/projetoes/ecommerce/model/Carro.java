@@ -7,12 +7,15 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "carro")
@@ -42,6 +45,11 @@ public class Carro implements Serializable {
 	
 	@Column(nullable = true, length = 300)
 	private String descricao;
+	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
+	private StatusCarro status;
 	
 	@Embedded
 	DadosCadastroVo dadosCadastro;
