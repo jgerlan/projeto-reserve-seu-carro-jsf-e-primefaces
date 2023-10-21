@@ -23,13 +23,16 @@
 							name="reserve-seu-carro-logo-texto.png" />
 					</p:menuitem>
 					<p:menuitem action="#{gestaoHomeBean.index}" value="Home" />
-					<p:menuitem value="Cadastro carro" />
+					<p:submenu label="Administração">
+						<p:menuitem action="#{gestaoHomeBean.gestaoUsuarios}" value="Gestão Usuários" />
+						<p:menuitem action="#{gestaoHomeBean.gestaoCarros}" value="Gestão Carros" />
+					</p:submenu>
 
 					<f:facet name="options" id="options">
 						<p:button value="Login" icon="pi pi-fw pi-sign-in"
 							styleClass="ui-button-info" />
-						
-						<p:button value="Criar usuário" icon="pi pi-fw pi-user-plus"
+
+						<p:button value="Crie sua conta" icon="pi pi-fw pi-user-plus"
 							styleClass="ui-button-info" />
 					</f:facet>
 				</p:menubar>

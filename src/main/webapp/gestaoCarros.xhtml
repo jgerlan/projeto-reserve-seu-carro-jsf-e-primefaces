@@ -7,12 +7,12 @@
 	template="WEB-INF/template/Layout.xhtml">
 
 	<ui:define name="titulo">
-		Listar carros
+		Gestão Carros
 	</ui:define>
 
 	<ui:define name="conteudo">
 		<f:metadata>
-			<f:viewAction action="#{gestaoCarrosBean.index}" />
+			<f:viewAction action="#{gestaoCarrosBean.todosCarros}" />
 		</f:metadata>
 
 		<h:form id="frm">
@@ -48,6 +48,10 @@
 
 				<p:column headerText="Descrição">
 					<h:outputText value="#{carro.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Status" sortBy="#{carro.status}">
+					<h:outputText value="#{carro.status}" />
 				</p:column>
 
 				<p:column id="Detalhe" name="Detalhe" styleClass="ui-column-custom">

@@ -23,7 +23,7 @@ public class CamadaPersistencia {
 		em.getTransaction().begin();
 		
 		//Declarando os repositórios
-		Carros carros = new Carros(em);
+		CarroDAO carros = new CarroDAO(em);
 		
 		//Buscando as informações do banco
 		List<Carro> listaDeCarros = carros.pesquisar("");

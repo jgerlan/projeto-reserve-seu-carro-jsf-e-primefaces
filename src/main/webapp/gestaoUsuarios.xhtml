@@ -7,12 +7,12 @@
 	template="WEB-INF/template/Layout.xhtml">
 
 	<ui:define name="titulo">
-		Listar carros
+		Gestão Usuários
 	</ui:define>
 
 	<ui:define name="conteudo">
 		<f:metadata>
-			<f:viewAction action="#{gestaoCarrosBean.index}" />
+			<f:viewAction action="#{gestaoCarrosBean.todosCarros}" />
 		</f:metadata>
 
 		<h:form id="frm">

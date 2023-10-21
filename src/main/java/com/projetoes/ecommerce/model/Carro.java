@@ -50,7 +50,7 @@ public class Carro implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 30)
 	private StatusCarro status;
-	
+
 	@Embedded
 	DadosCadastroVo dadosCadastro;
 	
@@ -107,6 +107,14 @@ public class Carro implements Serializable {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public StatusCarro getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusCarro status) {
+		this.status = status;
 	}
 	
 	public DadosCadastroVo getDadosCadastro() {

@@ -56,6 +56,10 @@ body {
     margin-right: 8px;
 }
 
+.frmnavbar .ui-menu .ui-menu-list .ui-menu-child.ui-shadow {
+    background-color: #545454;
+}
+
 #conteudo {
 	padding: 0px 8px
 }
