@@ -6,12 +6,15 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "usuario")
@@ -23,7 +26,7 @@ public class Usuario implements Serializable {
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private long id;
 		
-		@Column(nullable = false, length = 20)
+		@Column(unique = true, nullable = false, length = 20)
 		private String login;
 		
 		@Column(nullable = false, length = 15)
@@ -35,13 +38,14 @@ public class Usuario implements Serializable {
 		@Column(nullable = false)
 		private boolean ativo;
 		
-		@Temporal(TemporalType.TIMESTAMP)
-		@Column(name = "data_cadastro")
-		private Date dataCadastro;
-		
 		@Temporal(TemporalType.DATE)
 		@Column(name = "data_nascimento")
 		private Date dataNasc;
+		
+		@NotNull
+		@Enumerated(EnumType.STRING)
+		@Column(nullable = false, length = 30)
+		private TipoUsuario tipo;
 		
 		@Embedded
 		DadosCadastroVo dadosCadastro;
@@ -86,20 +90,20 @@ public class Usuario implements Serializable {
 			this.ativo = ativo;
 		}
 
-		public Date getDataCadastro() {
-			return dataCadastro;
-		}
-
-		public void setDataCadastro(Date dataCadastro) {
-			this.dataCadastro = dataCadastro;
-		}
-
 		public Date getDataNasc() {
 			return dataNasc;
 		}
 
 		public void setDataNasc(Date dataNasc) {
 			this.dataNasc = dataNasc;
+		}
+		
+		public TipoUsuario getTipo() {
+			return tipo;
+		}
+
+		public void setTipo(TipoUsuario tipo) {
+			this.tipo = tipo;
 		}
 
 		public DadosCadastroVo getDadosCadastro() {
