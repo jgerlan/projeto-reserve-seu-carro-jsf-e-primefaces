@@ -1,4 +1,3 @@
-@charset "ISO-8859-1";
 .corpo-formulario {
     background-color: #f2f2f2;
     font-family: Arial, sans-serif;
@@ -7,8 +6,10 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-right: 20px; 
 }
 
 .login-container, .recovery-container {

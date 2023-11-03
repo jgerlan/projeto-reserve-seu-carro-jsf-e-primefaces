@@ -9,6 +9,8 @@ body {
 	margin: 0;
     padding: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /*header {
@@ -61,15 +63,17 @@ body {
 }
 
 #conteudo {
-	padding: 0px 8px
+	padding: 0px 8px;
+	margin-bottom: 20px;
+	flex: 1;
 }
 
 footer {
 	text-align: center;
 	border-top: 1px solid #ccc;
 	padding: 5px 8px;
-	margin-top: 20px;
-	margin-bottom: 10px
+	margin-bottom: 10px;
+	margin-top: auto;
 }
 
 h1 {
