@@ -9,27 +9,71 @@ body {
 	margin: 0;
     padding: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-header {
+/*header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	padding: 5px;
 	margin-bottom: 20px;
 	height: 40px;
 	background-color: #545454;
 	color: #fff;
 	box-shadow: 0px 2px 2px #ccc
+}*/
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.frmnavbar .ui-state-disabled {
+    opacity: 1;
+}
+
+.frmnavbar .ui-menu.ui-menubar {
+    flex: 2;
+	background-color: #545454;
+	color: #fff;
+	box-shadow: 0px 2px 2px #ccc;
+  	width: 100%;
+  	height: 100%;
+}
+
+.frmnavbar .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+    color: white;
+}
+
+.frmnavbar .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem.ui-menubar-options {
+    margin-top: 8px;
+}
+
+.frmnavbar .ui-button.ui-button-info, .frmnavbar .ui-splitbutton.ui-button-info>.ui-button, .frmnavbar .ui-menubutton.ui-button-info>.ui-button {
+    margin-right: 8px;
+}
+
+.frmnavbar .ui-menu .ui-menu-list .ui-menu-child.ui-shadow {
+    background-color: #545454;
 }
 
 #conteudo {
-	padding: 0px 8px
+	padding: 0px 8px;
+	margin-bottom: 20px;
+	flex: 1;
 }
 
 footer {
 	text-align: center;
 	border-top: 1px solid #ccc;
 	padding: 5px 8px;
-	margin-top: 20px;
-	margin-bottom: 10px
+	margin-bottom: 10px;
+	margin-top: auto;
 }
 
 h1 {
@@ -68,12 +112,12 @@ header img {
 }*/
 
 
-/* Parent container for car-info and reservation-info */
+
 .info-container {
     display: flex;
-    flex-direction: row; /* Make them side by side */
-    justify-content: center; /* Center horizontally */
-    align-items: flex-start; /* Align to the top */
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: flex-start; 
 }
 
 /* Estilos para a informação do carro */
@@ -83,7 +127,7 @@ header img {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-right: 20px; /* Add space between the divs */
+    margin-right: 20px; 
 }
 
 .car-info img {

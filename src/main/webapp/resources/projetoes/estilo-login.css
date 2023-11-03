@@ -1,0 +1,83 @@
+.corpo-formulario {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container, .recovery-container {
+	width: 45%;
+    margin: 0 auto;
+    text-align:center;
+    display: flex;
+}
+
+.login-container h1 {
+    color: #333;
+}
+
+.form-group {
+    text-align: left;
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.login-section, .signup-section, .recovery-section {
+	background-color: #f2f2f2;
+    flex: 1; /* Faz com que ambos os contêineres ocupem a mesma largura disponível */
+    margin: 30px; /* Espaçamento entre os contêineres */
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.additional-options a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.additional-options a:hover {
+    text-decoration: underline;
+}
+
+.success-message {
+    color: #008000; /* Cor verde ou a cor de sua escolha */
+    font-weight: bold;
+    /* Outros estilos de sua escolha */
+}
+
