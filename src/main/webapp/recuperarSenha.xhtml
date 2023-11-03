@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo">
+		<!-- Detalhes carro -->
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet library="projetoes" name="estilo-login.css" />
+
+	<div class= "corpo-formulario" >
+		  <div class="recovery-container">
+        <div class="recovery-section">
+            <h1>Recuperação de Senha</h1>
+            <form method="post" action="processar-recuperacao.xhtml">
+                <div class="form-group">
+                    <label for="username">Nome de Usuário</label>
+                    <input type="text" id="username" name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="dataNascimento">Data de Nascimento</label>
+                    <input type="date" id="dataNascimento" name="dataNascimento" />
+                </div>
+                <button type="submit">Recuperar Senha</button>
+            </form>
+        </div>
+    </div>
+    </div>
+			
+
+	</ui:define>
+</ui:composition>
