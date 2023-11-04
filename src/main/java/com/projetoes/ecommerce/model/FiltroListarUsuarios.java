@@ -12,7 +12,7 @@ public class FiltroListarUsuarios implements Serializable {
 
 	private String nome;
 
-	private boolean ativo;
+	private StatusUsuario status;
 
 	private Date dataNasc;
 
@@ -41,13 +41,13 @@ public class FiltroListarUsuarios implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
+	
+	public StatusUsuario getStatus() {
+		return status;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setStatus(StatusUsuario status) {
+		this.status = status;
 	}
 
 	public Date getDataNasc() {

@@ -12,49 +12,69 @@
 
 	<ui:define name="conteudo">
 		<f:metadata>
-			<f:viewAction action="#{gestaoCarrosBean.todosCarros}" />
+			<f:viewAction action="#{gestaoUsuariosBean.todosUsuarios}" />
 		</f:metadata>
 
 		<h:form id="frm">
-			<p:toolbar>
-				<p:toolbarGroup align="right">
-					<p:inputText placeholder="Procurar por marca..."
-						value="#{gestaoCarrosBean.textoPesquisa}" />
+			<p:panel id="panel" header="Busca" styleClass="mb-3">
+				<h:panelGrid columns="10" cellpadding="7">
+					<h:outputLabel for="txt1" value="Login: " />
+					<p:inputText id="txt1" value="#{gestaoUsuariosBean.filtros.login}"
+						label="Login" style="width: 12rem" />
 
-					<p:commandButton icon="pi pi-search" styleClass="ui-button-info"
-						actionListener="#{gestaoCarrosBean.pesquisar}" title="Pesquisar"
-						update="carrosDataTable" />
-				</p:toolbarGroup>
-			</p:toolbar>
+					<h:outputLabel for="txt2" value="Nome: " />
+					<p:inputText id="txt2" value="#{gestaoUsuariosBean.filtros.nome}"
+						label="Nome" style="width: 12rem" />
+
+					<h:outputLabel for="txt3" value="Tipo: " />
+					<p:selectOneMenu id="txt3"
+						value="#{gestaoUsuariosBean.filtros.tipo}" style="width: 12rem">
+						<f:selectItem itemLabel="Selecionar Tipo" itemValue="" />
+						<f:selectItems value="#{gestaoUsuariosBean.tipoOptions}"
+							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel for="txt4" value="Status: " />
+					<p:selectOneMenu id="txt4"
+						value="#{gestaoUsuariosBean.filtros.status}" style="width: 12rem">
+						<f:selectItem itemLabel="Selecionar Status" itemValue="" />
+						<f:selectItems value="#{gestaoUsuariosBean.statusOptions}"
+							var="status" itemLabel="#{status.descricao}"
+							itemValue="#{status}" />
+					</p:selectOneMenu>
+					
+					<p:spacer width="12rem" />
+					<p:commandButton id="txt5" icon="pi pi-search" styleClass="ui-button-info"
+						actionListener="#{gestaoUsuariosBean.pesquisar}" title="Pesquisar" value="Pesquisar"
+						update="usuariosDataTable" />
+				</h:panelGrid>
+			</p:panel>
 
 			<p:spacer height="20px" />
 
-			<p:dataTable id="carrosDataTable"
-				value="#{gestaoCarrosBean.listaCarros}" var="carro"
+			<p:dataTable id="usuariosDataTable"
+				value="#{gestaoUsuariosBean.listaUsuarios}" var="usuario"
 				emptyMessage="Nenhum registro encontrado." paginator="true"
-				rows="10" paginatorPosition="bottom" rowKey="#{carro.id}">
+				rows="10" paginatorPosition="bottom" rowKey="#{usuario.id}">
 
-				<p:column headerText="Marca" sortBy="#{carro.marca}">
-					<h:outputText value="#{carro.marca}" />
+				<p:column headerText="Login" sortBy="#{usuario.login}">
+					<h:outputText value="#{usuario.login}" />
 				</p:column>
 
-				<p:column headerText="Modelo" sortBy="#{carro.modelo}">
-					<h:outputText value="#{carro.modelo}" />
+				<p:column headerText="Nome" sortBy="#{usuario.nome}">
+					<h:outputText value="#{usuario.nome}" />
 				</p:column>
 
-				<p:column headerText="Valor" sortBy="#{carro.valor}">
-					<h:outputText value="#{carro.valor}" />
+				<p:column headerText="Satus" sortBy="#{usuario.status}">
+					<h:outputText value="#{usuario.status}" />
 				</p:column>
 
-				<p:column headerText="Descrição">
-					<h:outputText value="#{carro.descricao}" />
+				<p:column headerText="Tipo" sortBy="#{usuario.tipo}">
+					<h:outputText value="#{usuario.tipo}" />
 				</p:column>
 
-				<p:column id="Detalhe" name="Detalhe" styleClass="ui-column-custom">
-					<p:commandButton icon="pi pi-eye"
-						action="#{gestaoCarrosBean.detalhes(carro.id)}" title="Detalhe">
-					</p:commandButton>
-
+				<p:column id="Edit" name="Edit" styleClass="ui-column-custom">
+					<p:commandButton icon="pi pi-user-edit" title="Editar" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

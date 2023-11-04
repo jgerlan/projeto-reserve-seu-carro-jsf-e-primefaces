@@ -35,8 +35,10 @@ public class Usuario implements Serializable {
 		@Column(nullable = false, length = 30)
 		private String nome;
 		
-		@Column(nullable = false)
-		private boolean ativo;
+		@NotNull
+		@Enumerated(EnumType.STRING)
+		@Column(nullable = false, length = 30)
+		private StatusUsuario status;
 		
 		@Temporal(TemporalType.DATE)
 		@Column(name = "data_nascimento")
@@ -81,13 +83,13 @@ public class Usuario implements Serializable {
 		public void setNome(String nome) {
 			this.nome = nome;
 		}
-
-		public boolean isAtivo() {
-			return ativo;
+		
+		public StatusUsuario getStatus() {
+			return status;
 		}
 
-		public void setAtivo(boolean ativo) {
-			this.ativo = ativo;
+		public void setStatus(StatusUsuario status) {
+			this.status = status;
 		}
 
 		public Date getDataNasc() {

@@ -3,12 +3,14 @@ package com.projetoes.ecommerce.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.projetoes.ecommerce.model.FiltroListarUsuarios;
+import com.projetoes.ecommerce.model.StatusUsuario;
+import com.projetoes.ecommerce.model.TipoUsuario;
 import com.projetoes.ecommerce.model.Usuario;
 import com.projetoes.ecommerce.respository.UsuarioDAO;
 
@@ -20,22 +22,40 @@ public class GestaoUsuariosBean implements Serializable {
 
 	@Inject
 	private UsuarioDAO usuarios;
-
+	
 	private Usuario usuario;
+
+	private StatusUsuario[] statusOptions;
+	
+	private TipoUsuario[] tipoOptions;
+	
+	private TipoUsuario tipo;
 
 	private List<Usuario> listaUsuarios;
 	
-	private String textoPesquisa;
+	private FiltroListarUsuarios filtros;
+	
+	@PostConstruct
+	public void init() {
+	    statusOptions = StatusUsuario.values();
+	    tipoOptions = TipoUsuario.values();
+	}
+	
+	public void index() {
+		this.usuario = new Usuario();
+		filtros = new FiltroListarUsuarios();
+		listaUsuarios = usuarios.listarPorFiltros(filtros);
+	}
 
-	public String detalhes(Long id) {
-		this.usuario = usuarios.porId(id);
-		return "detalheUsuario?faces-redirect=true";
+	public void pesquisar() {
+		listaUsuarios = usuarios.listarPorFiltros(filtros);
 	}
 
 	public void todosUsuarios() {
-		listaUsuarios = usuarios.listarTodos();
+		this.usuario = new Usuario();
+		filtros = new FiltroListarUsuarios();
+		listaUsuarios = usuarios.listarPorFiltros(filtros);
 	}
-
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -53,14 +73,28 @@ public class GestaoUsuariosBean implements Serializable {
 		this.listaUsuarios = listaUsuarios;
 	}
 
-	public String getTextoPesquisa() {
-		return textoPesquisa;
+	public FiltroListarUsuarios getFiltros() {
+		return filtros;
 	}
 
-	public void setTextoPesquisa(String textoPesquisa) {
-		this.textoPesquisa = textoPesquisa;
+	public void setFiltros(FiltroListarUsuarios filtros) {
+		this.filtros = filtros;
 	}
 	
-	
+	public TipoUsuario getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoUsuario tipo) {
+		this.tipo = tipo;
+	}
+
+	public StatusUsuario[] getStatusOptions() {
+		return statusOptions;
+	}
+
+	public TipoUsuario[] getTipoOptions() {
+		return tipoOptions;
+	}
 	
 }
