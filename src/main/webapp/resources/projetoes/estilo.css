@@ -157,3 +157,21 @@ header img {
 form .ui-inputfield{
     margin-right: 10px;
 }
+
+#frm-usuarios .ui-panelgrid .ui-panelgrid-cell {
+    padding: 4px 10px;
+}
+
+.panelgrid-row .ui-panelgrid-cell {
+    width: auto;
+}
+
+.panelgrid-row .ui-panelgrid-cell .ui-inputfield {
+    margin-right: 0;
+}
+
+.ui-panelgrid .ui-panelgrid-footer {
+    text-align: right !IMPORTANT; 
+}
+
+

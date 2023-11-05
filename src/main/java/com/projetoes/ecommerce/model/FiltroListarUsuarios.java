@@ -14,7 +14,9 @@ public class FiltroListarUsuarios implements Serializable {
 
 	private StatusUsuario status;
 
-	private Date dataNasc;
+	private Date deDataNasc;
+	
+	private Date ateDataNasc;
 
 	private TipoUsuario tipo;
 
@@ -49,13 +51,21 @@ public class FiltroListarUsuarios implements Serializable {
 	public void setStatus(StatusUsuario status) {
 		this.status = status;
 	}
-
-	public Date getDataNasc() {
-		return dataNasc;
+	
+	public Date getDeDataNasc() {
+		return deDataNasc;
 	}
 
-	public void setDataNasc(Date dataNasc) {
-		this.dataNasc = dataNasc;
+	public void setDeDataNasc(Date deDataNasc) {
+		this.deDataNasc = deDataNasc;
+	}
+
+	public Date getAteDataNasc() {
+		return ateDataNasc;
+	}
+
+	public void setAteDataNasc(Date ateDataNasc) {
+		this.ateDataNasc = ateDataNasc;
 	}
 
 	public TipoUsuario getTipo() {

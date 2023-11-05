@@ -56,9 +56,14 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 					criteriaBuilder.equal(usuarioRoot.get("tipo"), filtro.getTipo()));
 		}
 
-		if (filtro.getDataNasc() != null) {
+		if (filtro.getDeDataNasc() != null) {
+			predicate = criteriaBuilder.and(predicate, criteriaBuilder
+					.greaterThanOrEqualTo(usuarioRoot.get("dataNasc"), filtro.getDeDataNasc()));
+		}
+
+		if (filtro.getAteDataNasc() != null) {
 			predicate = criteriaBuilder.and(predicate,
-					criteriaBuilder.equal(usuarioRoot.get("data_nascimento"), filtro.getDataNasc()));
+					criteriaBuilder.lessThanOrEqualTo(usuarioRoot.get("dataNasc"), filtro.getAteDataNasc()));
 		}
 
 		criteriaQuery.where(predicate);

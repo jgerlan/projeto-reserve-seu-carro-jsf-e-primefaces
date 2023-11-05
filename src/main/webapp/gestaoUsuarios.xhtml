@@ -11,43 +11,80 @@
 	</ui:define>
 
 	<ui:define name="conteudo">
+
 		<f:metadata>
 			<f:viewAction action="#{gestaoUsuariosBean.todosUsuarios}" />
 		</f:metadata>
 
-		<h:form id="frm">
-			<p:panel id="panel" header="Busca" styleClass="mb-3">
-				<h:panelGrid columns="10" cellpadding="7">
-					<h:outputLabel for="txt1" value="Login: " />
-					<p:inputText id="txt1" value="#{gestaoUsuariosBean.filtros.login}"
-						label="Login" style="width: 12rem" />
+		<h:form id="frm-usuarios">
+			<p:panel id="panel" header="Busca">
+				<p:panelGrid>
+					<p:row styleClass="panelgrid-row">
+						<p:column>
+							<h:outputLabel for="busca-login" value="Login: " />
+							<p:inputText id="busca-login"
+								value="#{gestaoUsuariosBean.filtros.login}" label="Login" />
+						</p:column>
 
-					<h:outputLabel for="txt2" value="Nome: " />
-					<p:inputText id="txt2" value="#{gestaoUsuariosBean.filtros.nome}"
-						label="Nome" style="width: 12rem" />
+						<p:column>
+							<h:outputLabel for="busca-nome" value="Nome: " />
+							<p:inputText id="busca-nome"
+								value="#{gestaoUsuariosBean.filtros.nome}" label="Nome" />
+						</p:column>
 
-					<h:outputLabel for="txt3" value="Tipo: " />
-					<p:selectOneMenu id="txt3"
-						value="#{gestaoUsuariosBean.filtros.tipo}" style="width: 12rem">
-						<f:selectItem itemLabel="Selecionar Tipo" itemValue="" />
-						<f:selectItems value="#{gestaoUsuariosBean.tipoOptions}"
-							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-					</p:selectOneMenu>
+						<p:column>
+							<p:outputLabel for="busca-dedatanasc"
+								value="Data nascimento de: " />
+							<p:datePicker id="busca-dedatanasc"
+								value="#{gestaoUsuariosBean.filtros.deDataNasc}" locale="br"
+								monthNavigator="true" showIcon="true" />
+						</p:column>
 
-					<h:outputLabel for="txt4" value="Status: " />
-					<p:selectOneMenu id="txt4"
-						value="#{gestaoUsuariosBean.filtros.status}" style="width: 12rem">
-						<f:selectItem itemLabel="Selecionar Status" itemValue="" />
-						<f:selectItems value="#{gestaoUsuariosBean.statusOptions}"
-							var="status" itemLabel="#{status.descricao}"
-							itemValue="#{status}" />
-					</p:selectOneMenu>
-					
-					<p:spacer width="12rem" />
-					<p:commandButton id="txt5" icon="pi pi-search" styleClass="ui-button-info"
-						actionListener="#{gestaoUsuariosBean.pesquisar}" title="Pesquisar" value="Pesquisar"
-						update="usuariosDataTable" />
-				</h:panelGrid>
+						<p:column>
+							<p:outputLabel for="busca-atedatanasc"
+								value="Data nascimento até: " />
+							<p:datePicker id="busca-atedatanasc"
+								value="#{gestaoUsuariosBean.filtros.ateDataNasc}" locale="br"
+								monthNavigator="true" showIcon="true" />
+						</p:column>
+
+					</p:row>
+
+					<p:row styleClass="panelgrid-row">
+						<p:column>
+							<h:outputLabel for="busca-status" value="Status: " />
+							<p:selectOneMenu id="busca-status"
+								value="#{gestaoUsuariosBean.filtros.status}">
+								<f:selectItem itemLabel="Selecionar Status" itemValue="" />
+								<f:selectItems value="#{gestaoUsuariosBean.statusOptions}"
+									var="status" itemLabel="#{status.descricao}"
+									itemValue="#{status}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column>
+							<h:outputLabel for="busca-tipo" value="Tipo: " />
+							<p:selectOneMenu id="busca-tipo"
+								value="#{gestaoUsuariosBean.filtros.tipo}">
+								<f:selectItem itemLabel="Selecionar Tipo" itemValue="" />
+								<f:selectItems value="#{gestaoUsuariosBean.tipoOptions}"
+									var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+					<p:spacer height="0" />
+					<f:facet name="footer">
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton id="busca-button" icon="pi pi-search"
+									styleClass="ui-button-info"
+									actionListener="#{gestaoUsuariosBean.pesquisar}"
+									title="Pesquisar" value="Pesquisar" update="usuariosDataTable" />
+							</p:column>
+						</p:row>
+					</f:facet>
+				</p:panelGrid>
 			</p:panel>
 
 			<p:spacer height="20px" />
