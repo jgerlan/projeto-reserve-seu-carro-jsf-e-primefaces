@@ -17,7 +17,8 @@
 		</f:metadata>
 
 		<h:form id="frm-usuarios">
-			<p:panel id="panel" header="Busca">
+			<p:messages id="messages" />
+			<p:panel id="painelBusca" header="Busca">
 				<p:panelGrid>
 					<p:row styleClass="panelgrid-row">
 						<p:column>
@@ -37,7 +38,7 @@
 								value="Data nascimento de: " />
 							<p:datePicker id="busca-dedatanasc"
 								value="#{gestaoUsuariosBean.filtros.deDataNasc}" locale="br"
-								monthNavigator="true" showIcon="true" />
+								monthNavigator="true" yearNavigator="true" showIcon="true" />
 						</p:column>
 
 						<p:column>
@@ -45,7 +46,7 @@
 								value="Data nascimento até: " />
 							<p:datePicker id="busca-atedatanasc"
 								value="#{gestaoUsuariosBean.filtros.ateDataNasc}" locale="br"
-								monthNavigator="true" showIcon="true" />
+								monthNavigator="true" yearNavigator="true" showIcon="true" />
 						</p:column>
 
 					</p:row>
@@ -73,21 +74,36 @@
 						</p:column>
 					</p:row>
 
-					<p:spacer height="0" />
+					<!-- <p:spacer styleClass="espacoZero" /> -->
 					<f:facet name="footer">
 						<p:row>
 							<p:column colspan="2">
-								<p:commandButton id="busca-button" icon="pi pi-search"
-									styleClass="ui-button-info"
+								<p:commandButton id="busca-button" title="Pesquisar"
+									value="Pesquisar" icon="pi pi-search" process="painelBusca"
 									actionListener="#{gestaoUsuariosBean.pesquisar}"
-									title="Pesquisar" value="Pesquisar" update="usuariosDataTable" />
+									update="usuariosDataTable" />
 							</p:column>
 						</p:row>
 					</f:facet>
 				</p:panelGrid>
 			</p:panel>
 
-			<p:spacer height="20px" />
+			<p:spacer styleClass="espacoUm" />
+
+			<p:toolbar id="toolbar-gestao-usuario">
+				<f:facet name="right">
+
+					<p:commandButton value="Novo usuário" icon="pi pi-fw pi-user-plus"
+						actionListener="#{gestaoUsuariosBean.prepararNovoUsuario}"
+						oncomplete="PF('usuarioDialogWidgetVar').show()"
+						update=":frm-usuarios:usuarioDialog" process="@this">
+						<p:resetInput target="usuarioDialog" />
+					</p:commandButton>
+
+				</f:facet>
+			</p:toolbar>
+
+			<p:spacer styleClass="espacoUm" />
 
 			<p:dataTable id="usuariosDataTable"
 				value="#{gestaoUsuariosBean.listaUsuarios}" var="usuario"
@@ -110,10 +126,122 @@
 					<h:outputText value="#{usuario.tipo}" />
 				</p:column>
 
-				<p:column id="Edit" name="Edit" styleClass="ui-column-custom">
-					<p:commandButton icon="pi pi-user-edit" title="Editar" />
+				<p:column id="botoes-acao" name="botoes-acao"
+					styleClass="button-container">
+
+					<p:commandButton id="editCommandButton" title="Editar"
+						icon="pi pi-user-edit" styleClass="ui-button-warning"
+						actionListener="#{gestaoUsuariosBean.prepararEdicao(usuario.id)}"
+						update=":frm-usuarios:usuarioDialog"
+						oncomplete="PF('usuarioDialogWidgetVar').show()" process="@this">
+						<p:resetInput target=":frm-usuarios:usuarioDialog" />
+					</p:commandButton>
+
+					<p:commandButton id="deleteCommandButton" title="Excluir"
+						icon="pi pi-trash" styleClass="ui-button-danger"
+						actionListener="#{gestaoUsuariosBean.excluir(usuario.id)}"
+						process="@this"
+						update=":frm-usuarios:messages :frm-usuarios:usuariosDataTable">
+						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+							message="Posso excluir o usuário?" />
+					</p:commandButton>
 				</p:column>
+
 			</p:dataTable>
+
+			<!-- Diálogo criar/editar -->
+
+			<p:dialog id="usuarioDialog" styleClass="inputsPart" header="Usuário"
+				widgetVar="usuarioDialogWidgetVar" modal="true" resizable="false"
+				draggable="false" closeOnEscape="true">
+				<p:messages id="usuarioMessages" />
+
+				<p:defaultCommand target="salvarCommandButton" scope="usuarioDialog" />
+
+				<h:panelGrid id="usuarioPanelGrid" columns="2"
+					rendered="#{gestaoUsuariosBean.usuario ne null}">
+
+					<p:outputLabel value="Nome: " for="usuarioDialogNome" />
+					<p:inputText id="usuarioDialogNome" size="80" maxlength="120"
+						value="#{gestaoUsuariosBean.usuario.nome}" required="true" />
+
+					<p:outputLabel value="Login: " for="usuarioDialogLogin" />
+					<p:inputText id="usuarioDialogLogin" size="80" maxlength="80"
+						value="#{gestaoUsuariosBean.usuario.login}" required="true"
+						validatorMessage="Formato de email inválido!">
+						<f:validateRegex
+							pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+					</p:inputText>
+
+					<p:outputLabel value="Data Nascimento: "
+						for="usuarioDialogDataNascimento" />
+					<p:datePicker id="usuarioDialogDataNascimento" pattern="dd/MM/yyyy"
+						value="#{gestaoUsuariosBean.usuario.dataNasc}" locale="br"
+						monthNavigator="true" yearNavigator="true" showIcon="true"
+						required="true" />
+
+					<p:outputLabel value="Tipo usuário: " for="usuarioDialogTipo" />
+					<p:selectOneMenu id="usuarioDialogTipo"
+						value="#{gestaoUsuariosBean.usuario.tipo}" required="true">
+						<f:selectItem itemLabel="Selecionar Tipo" itemValue="" />
+						<f:selectItems value="#{gestaoUsuariosBean.tipoOptions}"
+							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel for="usuarioDialogStatus" value="Status: " />
+					<p:selectOneMenu id="usuarioDialogStatus"
+						value="#{gestaoUsuariosBean.usuario.status}" required="true">
+						<f:selectItem itemLabel="Selecionar Status" itemValue="" />
+						<f:selectItems value="#{gestaoUsuariosBean.statusOptions}"
+							var="status" itemLabel="#{status.descricao}"
+							itemValue="#{status}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Senha: " for="usuarioDialogSenha"
+						rendered="#{gestaoUsuariosBean.usuario.id == 0}" />
+					<p:password id="usuarioDialogSenha" size="20" maxlength="80"
+						rendered="#{gestaoUsuariosBean.usuario.id == 0}"
+						value="#{gestaoUsuariosBean.usuario.senha}"
+						match="usuarioDialogSenhaConfirmar" toggleMask="true"
+						redisplay="true" required="true">
+						<f:validateLength minimum="6"></f:validateLength>
+					</p:password>
+
+					<p:outputLabel value="Senha: " for="usuarioDialogSenhaConfirmar"
+						rendered="#{gestaoUsuariosBean.usuario.id == 0}" />
+					<p:password id="usuarioDialogSenhaConfirmar" size="20"
+						rendered="#{gestaoUsuariosBean.usuario.id == 0}" maxlength="80"
+						value="#{gestaoUsuariosBean.usuario.senha}" toggleMask="true"
+						redisplay="true" required="true" />
+
+					<p:outputLabel id="salvarCommandButtonLabel"
+						rendered="#{gestaoUsuariosBean.usuario.id == 0}" />
+					<p:commandButton id="salvarCommandButton" value="Salvar"
+						styleClass="commandButtonUsuario"
+						rendered="#{gestaoUsuariosBean.usuario.id == 0}"
+						actionListener="#{gestaoUsuariosBean.salvar}"
+						update="usuarioPanelGrid usuarioMessages"
+						oncomplete="if (!args.validationFailed &amp;&amp; args.usuarioSalvo) PF('usuarioDialogWidgetVar').hide()"
+						process="usuarioDialog" />
+
+					<p:outputLabel id="atualizarCommandButtonLabel"
+						rendered="#{gestaoUsuariosBean.usuario.id != 0}" />
+					<p:commandButton id="atualizarCommandButton" value="Atualizar"
+						styleClass="commandButtonUsuario"
+						rendered="#{gestaoUsuariosBean.usuario.id != 0}"
+						actionListener="#{gestaoUsuariosBean.atualizar}"
+						update="usuarioPanelGrid usuarioMessages"
+						oncomplete="if (!args.validationFailed &amp;&amp; args.usuarioAtualizado) PF('usuarioDialogWidgetVar').hide()"
+						process="usuarioDialog" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			</p:confirmDialog>
 		</h:form>
 
 	</ui:define>

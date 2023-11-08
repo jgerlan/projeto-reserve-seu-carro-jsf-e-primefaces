@@ -166,12 +166,39 @@ form .ui-inputfield{
     width: auto;
 }
 
-.panelgrid-row .ui-panelgrid-cell .ui-inputfield {
-    margin-right: 0;
+.panelgrid-row, .inputsPart {
+	.ui-inputfield{
+    	margin-right: 0;
+	}
+}
+
+.inputsPart{
+	position: fixed;
 }
 
 .ui-panelgrid .ui-panelgrid-footer {
     text-align: right !IMPORTANT; 
 }
+
+.espacoZero{
+	height: 0px;
+}
+
+.espacoUm{
+	height: 10px;
+}
+
+.espacoDois{
+	height: 20px;
+}
+
+.button-container{
+    text-align: right; 
+}
+
+.commandButtonUsuario{
+	float: right;
+}
+
 
 

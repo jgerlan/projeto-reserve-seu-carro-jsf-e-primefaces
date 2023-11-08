@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 @Entity
 @Table(name = "usuario")
@@ -40,6 +41,7 @@ public class Usuario implements Serializable {
 		@Column(nullable = false, length = 30)
 		private StatusUsuario status;
 		
+		@Past
 		@Temporal(TemporalType.DATE)
 		@Column(name = "data_nascimento")
 		private Date dataNasc;
