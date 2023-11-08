@@ -1,5 +1,7 @@
 package com.projetoes.ecommerce.respository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,6 +35,8 @@ public class CarroDAO extends RepositorioCRUD<Carro, Long> {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<Carro> criteriaQuery = criteriaBuilder.createQuery(Carro.class);
 		Root<Carro> carroRoot = criteriaQuery.from(Carro.class);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 
 		Predicate predicate = criteriaBuilder.conjunction();
 
@@ -46,16 +50,27 @@ public class CarroDAO extends RepositorioCRUD<Carro, Long> {
 					criteriaBuilder.lower(carroRoot.get("modelo")), "%" + filtro.getModelo().toLowerCase() + "%"));
 		}
 
-		if (filtro.getAnoFabricacaoInicio() != null) {
-			predicate = criteriaBuilder.and(predicate, criteriaBuilder
-					.greaterThanOrEqualTo(carroRoot.get("anoFabricacao"), filtro.getAnoFabricacaoInicio()));
+		if (filtro.getAnoModeloInicio() != null && !filtro.getAnoModeloInicio().isEmpty()) {
+			
+			try {
+				Date anoModeloInicio = sdf.parse(filtro.getAnoModeloInicio());
+				predicate = criteriaBuilder.and(predicate, criteriaBuilder
+						.greaterThanOrEqualTo(carroRoot.get("anoModelo"), anoModeloInicio));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
-		if (filtro.getAnoFabricacaoFim() != null) {
-			predicate = criteriaBuilder.and(predicate,
-					criteriaBuilder.lessThanOrEqualTo(carroRoot.get("anoFabricacao"), filtro.getAnoFabricacaoFim()));
+		
+		if (filtro.getAnoModeloFim() != null && !filtro.getAnoModeloFim().isEmpty()) {
+			
+			try {
+				Date anoModeloFim = sdf.parse(filtro.getAnoModeloFim());
+				predicate = criteriaBuilder.and(predicate, criteriaBuilder
+						.lessThanOrEqualTo(carroRoot.get("anoModelo"), anoModeloFim));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 		if (filtro.getValorInicio() > 0) {
 			predicate = criteriaBuilder.and(predicate,
 					criteriaBuilder.greaterThanOrEqualTo(carroRoot.get("valor"), filtro.getValorInicio()));

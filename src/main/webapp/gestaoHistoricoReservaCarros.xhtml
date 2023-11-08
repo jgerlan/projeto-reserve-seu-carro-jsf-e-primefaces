@@ -15,17 +15,75 @@
 			<f:viewAction action="#{gestaoCarrosBean.todosCarros}" />
 		</f:metadata>
 
-		<h:form id="frm">
-			<p:toolbar>
-				<p:toolbarGroup align="right">
-					<p:inputText placeholder="Procurar por marca..."
-						value="#{gestaoCarrosBean.textoPesquisa}" />
+		<h:form id="frm-carros">
+			<p:panel id="painelBusca" header="Busca">
+				<p:panelGrid styleClass="panelgrid-label-input">
+					<p:row styleClass="panelgrid-row">
+						<p:column>
+							<h:outputLabel for="busca-marca" value="Marca: " />
+							<p:inputText id="busca-marca"
+								value="#{gestaoCarrosBean.filtros.marca}" label="Marca" />
+						</p:column>
 
-					<p:commandButton icon="pi pi-search" styleClass="ui-button-info"
-						actionListener="#{gestaoCarrosBean.pesquisar}" title="Pesquisar"
-						update="carrosDataTable" />
-				</p:toolbarGroup>
-			</p:toolbar>
+						<p:column>
+							<h:outputLabel for="busca-modelo" value="Modelo: " />
+							<p:inputText id="busca-modelo"
+								value="#{gestaoCarrosBean.filtros.modelo}" label="Modelo" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="busca-anomodeloinicio"
+								value="Ano modelo de: " />
+							<p:inputMask id="busca-anomodeloinicio"
+								value="#{gestaoCarrosBean.filtros.anoModeloInicio}" mask="9999"
+								label="Modelo" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="busca-anomodelofim" value="Até: " />
+							<p:inputMask id="busca-anomodelofim"
+								value="#{gestaoCarrosBean.filtros.anoModeloFim}" mask="9999"
+								label="Modelo" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="busca-valorinicio" value="Valor de: " />
+							<p:inputNumber id="busca-valorinicio"
+								value="#{gestaoCarrosBean.filtros.valorInicio}" label="Modelo"
+								minValue="0" decimalPlaces="2" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="busca-valorfim" value="Até: " />
+							<p:inputNumber id="busca-valorfim"
+								value="#{gestaoCarrosBean.filtros.valorFim}" label="Modelo"
+								minValue="0" decimalPlaces="2" />
+						</p:column>
+
+						<p:column>
+							<h:outputLabel for="busca-status" value="Status: " />
+							<p:selectOneMenu id="busca-status"
+								value="#{gestaoCarrosBean.filtros.status}">
+								<f:selectItem itemLabel="Selecionar Status" itemValue="" />
+								<f:selectItems value="#{gestaoCarrosBean.status}" var="status"
+									itemLabel="#{status.descricao}" itemValue="#{status}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+					<!-- <p:spacer styleClass="espacoZero" /> -->
+					<f:facet name="footer">
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton id="busca-button" title="Pesquisar"
+									value="Pesquisar" icon="pi pi-search" process="painelBusca"
+									actionListener="#{gestaoCarrosBean.pesquisar}"
+									update="carrosDataTable" />
+							</p:column>
+						</p:row>
+					</f:facet>
+				</p:panelGrid>
+			</p:panel>
 
 			<p:spacer height="20px" />
 

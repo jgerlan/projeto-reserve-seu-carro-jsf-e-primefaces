@@ -15,9 +15,9 @@ public class FiltroListarCarros implements Serializable {
 	
 	private Date anoFabricacaoFim;
 	
-	private Date anoModeloInicio;
+	private String anoModeloInicio;
 	
-	private Date anoModeloFim;
+	private String anoModeloFim;
 	
 	private double valorInicio;
 	
@@ -49,16 +49,16 @@ public class FiltroListarCarros implements Serializable {
 	public void setAnoFabricacaoFim(Date anoFabricacaoFim) {
 		this.anoFabricacaoFim = anoFabricacaoFim;
 	}
-	public Date getAnoModeloInicio() {
+	public String getAnoModeloInicio() {
 		return anoModeloInicio;
 	}
-	public void setAnoModeloInicio(Date anoModeloInicio) {
+	public void setAnoModeloInicio(String anoModeloInicio) {
 		this.anoModeloInicio = anoModeloInicio;
 	}
-	public Date getAnoModeloFim() {
+	public String getAnoModeloFim() {
 		return anoModeloFim;
 	}
-	public void setAnoModeloFim(Date anoModeloFim) {
+	public void setAnoModeloFim(String anoModeloFim) {
 		this.anoModeloFim = anoModeloFim;
 	}
 	public double getValorInicio() {

@@ -162,6 +162,10 @@ form .ui-inputfield{
     padding: 4px 10px;
 }
 
+#frm-carros .ui-panelgrid .ui-panelgrid-cell {
+    padding: 4px 10px;
+}
+
 .panelgrid-row .ui-panelgrid-cell {
     width: auto;
 }
@@ -200,5 +204,11 @@ form .ui-inputfield{
 	float: right;
 }
 
+.panelgrid-label-input {
+    margin-bottom: 10px;
+}
 
+.panelgrid-label-input label {
+    display: block;
+}
 

@@ -19,7 +19,7 @@
 		<h:form id="frm-usuarios">
 			<p:messages id="messages" />
 			<p:panel id="painelBusca" header="Busca">
-				<p:panelGrid>
+				<p:panelGrid styleClass="panelgrid-label-input">
 					<p:row styleClass="panelgrid-row">
 						<p:column>
 							<h:outputLabel for="busca-login" value="Login: " />
@@ -49,9 +49,6 @@
 								monthNavigator="true" yearNavigator="true" showIcon="true" />
 						</p:column>
 
-					</p:row>
-
-					<p:row styleClass="panelgrid-row">
 						<p:column>
 							<h:outputLabel for="busca-status" value="Status: " />
 							<p:selectOneMenu id="busca-status"
@@ -116,6 +113,10 @@
 
 				<p:column headerText="Nome" sortBy="#{usuario.nome}">
 					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				
+				<p:column headerText="Data nascimento" sortBy="#{usuario.dataNasc}">
+					<h:outputText value="#{usuario.dataNasc}" />
 				</p:column>
 
 				<p:column headerText="Satus" sortBy="#{usuario.status}">
