@@ -7,7 +7,7 @@
 	template="WEB-INF/template/Layout.xhtml">
 
 	<ui:define name="titulo">
-		Gestão Carros
+		Gestão Histórico Reserva de Carros
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -85,7 +85,7 @@
 				</p:panelGrid>
 			</p:panel>
 
-			<p:spacer styleClass="espacoDois" />
+			<p:spacer height="20px" />
 
 			<p:dataTable id="carrosDataTable"
 				value="#{gestaoCarrosBean.listaCarros}" var="carro"
@@ -104,14 +104,10 @@
 					<h:outputText value="#{carro.valor}" />
 				</p:column>
 
-				<p:column headerText="Data modelo" sortBy="#{carro.anoModelo}">
-					<h:outputText value="#{carro.anoModelo}" />
-				</p:column>
-
 				<p:column headerText="Descrição">
 					<h:outputText value="#{carro.descricao}" />
 				</p:column>
-
+				
 				<p:column headerText="Status" sortBy="#{carro.status}">
 					<h:outputText value="#{carro.status}" />
 				</p:column>

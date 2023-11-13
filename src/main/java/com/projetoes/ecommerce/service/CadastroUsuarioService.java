@@ -19,6 +19,11 @@ public class CadastroUsuarioService implements Serializable {
 	public void salvar(Usuario usuario) {
 		usuarios.guardar(usuario);
 	}
+	
+	@Transacional
+	public void atualizar(Usuario usuario) {
+		usuarios.guardar(usuario);
+	}
 
 	@Transacional
 	public void excluir(long id) {

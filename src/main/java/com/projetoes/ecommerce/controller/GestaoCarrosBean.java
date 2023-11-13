@@ -25,12 +25,9 @@ public class GestaoCarrosBean implements Serializable {
 
 	private List<Carro> listaCarros;
 
-	private String textoPesquisa;
-	
 	private FiltroListarCarros filtros;
 	
 	public void index() {
-		this.textoPesquisa = "";
 		this.carro = new Carro();
 		filtros = new FiltroListarCarros();
 		filtros.setStatus(StatusCarro.Livre);
@@ -43,12 +40,10 @@ public class GestaoCarrosBean implements Serializable {
 	}
 
 	public void pesquisar() {
-		filtros.setMarca(textoPesquisa);
 		listaCarros = carros.listarPorFiltros(filtros);
 	}
 
 	public void todosCarros() {
-		this.textoPesquisa = "";
 		this.carro = new Carro();
 		filtros = new FiltroListarCarros();
 		listaCarros = carros.listarPorFiltros(filtros);
@@ -66,12 +61,20 @@ public class GestaoCarrosBean implements Serializable {
 		this.carro = carro;
 	}
 
-	public String getTextoPesquisa() {
-		return textoPesquisa;
+	public FiltroListarCarros getFiltros() {
+		return filtros;
 	}
 
-	public void setTextoPesquisa(String textoPesquisa) {
-		this.textoPesquisa = textoPesquisa;
+	public void setFiltros(FiltroListarCarros filtros) {
+		this.filtros = filtros;
 	}
 
+	public void setListaCarros(List<Carro> listaCarros) {
+		this.listaCarros = listaCarros;
+	}
+	
+	public StatusCarro[] getStatus() {
+        return StatusCarro.values();
+    }
+	
 }

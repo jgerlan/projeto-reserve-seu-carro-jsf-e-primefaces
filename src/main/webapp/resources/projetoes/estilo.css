@@ -157,3 +157,58 @@ header img {
 form .ui-inputfield{
     margin-right: 10px;
 }
+
+#frm-usuarios .ui-panelgrid .ui-panelgrid-cell {
+    padding: 4px 10px;
+}
+
+#frm-carros .ui-panelgrid .ui-panelgrid-cell {
+    padding: 4px 10px;
+}
+
+.panelgrid-row .ui-panelgrid-cell {
+    width: auto;
+}
+
+.panelgrid-row, .inputsPart {
+	.ui-inputfield{
+    	margin-right: 0;
+	}
+}
+
+.inputsPart{
+	position: fixed;
+}
+
+.ui-panelgrid .ui-panelgrid-footer {
+    text-align: right !IMPORTANT; 
+}
+
+.espacoZero{
+	height: 0px;
+}
+
+.espacoUm{
+	height: 10px;
+}
+
+.espacoDois{
+	height: 20px;
+}
+
+.button-container{
+    text-align: right; 
+}
+
+.commandButtonUsuario{
+	float: right;
+}
+
+.panelgrid-label-input {
+    margin-bottom: 10px;
+}
+
+.panelgrid-label-input label {
+    display: block;
+}
+

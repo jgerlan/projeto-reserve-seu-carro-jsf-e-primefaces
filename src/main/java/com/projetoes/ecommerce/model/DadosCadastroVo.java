@@ -18,11 +18,11 @@ public class DadosCadastroVo {
 	@Column(nullable = false, name = "usuarioid_atualizacao")
 	private long UsuarioIdAtualizacao;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, name = "data_criacao")
 	private Date DataCriacao;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, name = "data_atualizacao")
 	private Date DataAtualizacao;
 

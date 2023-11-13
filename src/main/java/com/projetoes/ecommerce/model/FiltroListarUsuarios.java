@@ -8,13 +8,13 @@ public class FiltroListarUsuarios implements Serializable {
 
 	private String login;
 
-	private String senha;
-
 	private String nome;
 
-	private boolean ativo;
+	private StatusUsuario status;
 
-	private Date dataNasc;
+	private Date deDataNasc;
+	
+	private Date ateDataNasc;
 
 	private TipoUsuario tipo;
 
@@ -26,14 +26,6 @@ public class FiltroListarUsuarios implements Serializable {
 		this.login = login;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -41,21 +33,29 @@ public class FiltroListarUsuarios implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
+	
+	public StatusUsuario getStatus() {
+		return status;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setStatus(StatusUsuario status) {
+		this.status = status;
+	}
+	
+	public Date getDeDataNasc() {
+		return deDataNasc;
 	}
 
-	public Date getDataNasc() {
-		return dataNasc;
+	public void setDeDataNasc(Date deDataNasc) {
+		this.deDataNasc = deDataNasc;
 	}
 
-	public void setDataNasc(Date dataNasc) {
-		this.dataNasc = dataNasc;
+	public Date getAteDataNasc() {
+		return ateDataNasc;
+	}
+
+	public void setAteDataNasc(Date ateDataNasc) {
+		this.ateDataNasc = ateDataNasc;
 	}
 
 	public TipoUsuario getTipo() {

@@ -21,4 +21,8 @@ public class GestaoHomeBean implements Serializable {
 	public String gestaoCarros() {
 		return "gestaoCarros?faces-redirect=true";
 	}
+	
+	public String gestaoHistoricoReservaCarros() {
+		return "gestaoHistoricoReservaCarros?faces-redirect=true";
+	}
 }
