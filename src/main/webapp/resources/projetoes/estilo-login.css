@@ -81,3 +81,8 @@ button:hover {
     /* Outros estilos de sua escolha */
 }
 
+#frm-login button{
+	margin-top: 8px;
+	align-items: center;
+}
+
