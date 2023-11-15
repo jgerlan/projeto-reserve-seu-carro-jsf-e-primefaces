@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -53,6 +54,18 @@ public class Usuario implements Serializable {
 		
 		@Embedded
 		DadosCadastroVo dadosCadastro;
+		
+		// confirmacaoSenha
+		@Transient // evita que a propriedade seja mapeada para o banco de dados
+		private String confirmacaoSenha;
+
+		public String getConfirmacaoSenha() {
+		    return confirmacaoSenha;
+		}
+
+		public void setConfirmacaoSenha(String confirmacaoSenha) {
+		    this.confirmacaoSenha = confirmacaoSenha;
+		}
 
 		public long getId() {
 			return id;
