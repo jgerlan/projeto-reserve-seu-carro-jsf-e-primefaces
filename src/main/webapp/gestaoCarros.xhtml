@@ -16,10 +16,10 @@
 		</f:metadata>
 
 		<h:form id="frm-carros">
-			<p:panel id="painelBusca" header="Busca">
 			<p:messages id="messages" closable="true" >
 				<p:autoUpdate />
 			</p:messages>
+			<p:panel id="painelBusca" header="Busca">
 				<p:panelGrid styleClass="panelgrid-label-input">
 					<p:row styleClass="panelgrid-row">
 						<p:column>
@@ -88,23 +88,22 @@
 				</p:panelGrid>
 			</p:panel>
 
-			<p:spacer styleClass="espacoDois" />
-								</f:facet>
-				</p:panelGrid>
-			</p:panel>
-
 			<p:spacer styleClass="espacoUm" />
 
-			<p:toolbar id="toolbar-gestao-carro">
+			<p:toolbar id="toolbar-gestao-usuario">
 				<f:facet name="right">
 
-					<p:commandButton value="Novo carro" icon="pi pi-fw pi-user-plus"
+					<p:commandButton value="Novo carroo" icon="pi pi-fw pi-user-plus"
 						actionListener="#{gestaoCarrosBean.prepararNovoCarro}"
-						oncomplete="PF('carroDialogWidgetVar').show()"
+						oncomplete="PF('carrooDialogWidgetVar').show()"
 						update=":frm-carros:carroDialog" process="@this">
 						<p:resetInput target="carroDialog" />
 					</p:commandButton>
-			
+
+				</f:facet>
+			</p:toolbar>
+
+			<p:spacer styleClass="espacoUm" />
 
 			<p:dataTable id="carrosDataTable"
 				value="#{gestaoCarrosBean.listaCarros}" var="carro"
@@ -119,11 +118,23 @@
 					<h:outputText value="#{carro.modelo}" />
 				</p:column>
 
-			<p:column headerText="Tipo" sortBy="#{carro.tipo}">
-					<h:outputText value="#{carro.tipo}" />
+				<p:column headerText="Valor" sortBy="#{carro.valor}">
+					<h:outputText value="#{carro.valor}" />
 				</p:column>
 
-				<p:column id="botoes-acao" name="botoes-acao"
+				<p:column headerText="Data modelo" sortBy="#{carro.anoModelo}">
+					<h:outputText value="#{carro.anoModelo}" />
+				</p:column>
+
+				<p:column headerText="Descrição">
+					<h:outputText value="#{carro.descricao}" />
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{carro.status}">
+					<h:outputText value="#{carro.status}" />
+				</p:column>
+
+					<p:column id="botoes-acao" name="botoes-acao"
 					styleClass="button-container">
 
 					<p:commandButton id="editCommandButton" title="Editar"
@@ -136,21 +147,18 @@
 
 					<p:commandButton id="deleteCommandButton" title="Excluir"
 						icon="pi pi-trash" styleClass="ui-button-danger"
-						actionListener="#{gestaoCarroosBean.excluir(carro.id)}"
+						actionListener="#{gestaoCarrosBean.excluir(carro.id)}"
 						process="@this"
 						update=":frm-carros:messages :frm-carros:carrosDataTable">
 						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
 							message="Posso excluir o carro?" />
 					</p:commandButton>
 				</p:column>
-					</p:column>
-
 			</p:dataTable>
+				<!-- Diálogo criar/editar -->
 
-			<!-- Diálogo criar/editar -->
-
-			<p:dialog id="carroDialog" styleClass="inputsPart" header="Carro"
-				widgetVar="carrooDialogWidgetVar" modal="true" resizable="false"
+			<p:dialog id="carrroDialog" styleClass="inputsPart" header="Carro"
+				widgetVar="carroDialogWidgetVar" modal="true" resizable="false"
 				draggable="false" closeOnEscape="true">
 				<p:messages id="carroMessages" />
 
@@ -161,7 +169,7 @@
 
 					<p:outputLabel value="Nome: " for="carroDialogNome" />
 					<p:inputText id="carroDialogNome" size="80" maxlength="120"
-						value="#{gestaoCarrosBean.carro.nome}" required="true" />
+						value="#{gestaoCarrosBean.carrro.nome}" required="true" />
 
 					<p:outputLabel value="Login: " for="carroDialogLogin" />
 					<p:inputText id="carroDialogLogin" size="80" maxlength="80"
@@ -225,7 +233,7 @@
 					<p:outputLabel id="atualizarCommandButtonLabel"
 						rendered="#{gestaoCarrosBean.carro.id != 0}" />
 					<p:commandButton id="atualizarCommandButton" value="Atualizar"
-						styleClass="commandButtonCarro"
+						styleClass="commandButtonUsuario"
 						rendered="#{gestaoCarrosBean.carro.id != 0}"
 						actionListener="#{gestaoCarrosBean.atualizar}"
 						update="carroPanelGrid carroMessages"
@@ -236,27 +244,10 @@
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				<p:commandButton value="Sim" type="button"
-				styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
 			</p:confirmDialog>
-		</h:form>
-
-				<p:column headerText="Descrição">
-					<h:outputText value="#{carro.descricao}" />
-				</p:column>
-
-				<p:column headerText="Status" sortBy="#{carro.status}">
-					<h:outputText value="#{carro.status}" />
-				</p:column>
-
-				<p:column id="Detalhe" name="Detalhe" styleClass="ui-column-custom">
-					<p:commandButton icon="pi pi-eye"
-						action="#{gestaoCarrosBean.detalhes(carro.id)}" title="Detalhe">
-					</p:commandButton>
-
-				</p:column>
-			</p:dataTable>
 		</h:form>
 
 	</ui:define>
