@@ -20,13 +20,14 @@
             <form method="post" action="processar-recuperacao.xhtml">
                 <div class="form-group">
                     <label for="username">Nome de Usuário</label>
-                    <input type="text" id="username" name="username" />
+                    <input type="text" id="login" name="username" />
                 </div>
                 <div class="form-group">
                     <label for="dataNascimento">Data de Nascimento</label>
-                    <input type="date" id="dataNascimento" name="dataNascimento" />
+                    <input type="date" id="dataNasc" name="dataNasc" />
                 </div>
-                <button type="submit">Recuperar Senha</button>
+                 <h:commandButton value="Cadastrar" action="#{RecuperarSenhaBean.getSenha}" />
+                <!-- <button type="submit">Recuperar Senha</button> -->
             </form>
         </div>
     </div>
