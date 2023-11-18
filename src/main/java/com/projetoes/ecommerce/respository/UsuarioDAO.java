@@ -93,4 +93,37 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 
 		return getEntityManager().createQuery(criteriaQuery).getResultList();
 	}
+	
+	// métodos adicionados:
+
+    public boolean existeNomeUsuario(String nomeUsuario) {
+        TypedQuery<Long> query = getEntityManager()
+                .createQuery("select count(u) from Usuario u where u.nome = :nomeUsuario", Long.class);
+        query.setParameter("nomeUsuario", nomeUsuario);
+        return query.getSingleResult() > 0;
+    }
+
+    public void salvar(Usuario usuario) {
+        if (usuario.getId() == 0) {
+            // Se o ID for 0, é um novo usuário, então persiste
+            getEntityManager().persist(usuario);
+        } else {
+            // Se o ID não for 0, é um usuário existente
+            getEntityManager().merge(usuario);
+        }
+    }
+    
+    public Usuario autenticar(String username, String password) {
+        TypedQuery<Usuario> query = getEntityManager()
+                .createQuery("SELECT u FROM Usuario u WHERE u.login = :username AND u.senha = :password", Usuario.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Usuário não encontrado ou senha incorreta
+            return null;
+        }
+    }
 }

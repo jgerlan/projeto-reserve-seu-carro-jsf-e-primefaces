@@ -13,33 +13,35 @@
 	<ui:define name="conteudo">
 		<h:outputStylesheet library="projetoes" name="estilo-login.css" />
 
-
 		<title>Login</title>
-		<div class= "corpo-formulario" >
+		
+		<div class="corpo-formulario">
 			<div class="login-container">
 				<div class="login-section">
 					<h1>Login</h1>
-					<form method="post" action="verificar-login">
+					<h:form>
+						<h:messages styleClass="success-message" globalOnly="true" layout="table" />
+						
 						<div class="form-group">
-							<label for="username">Nome de Usuario</label> <input type="text"
-								id="username" name="username" />
+							<label for="username">Nome de Usuário</label>
+							<h:inputText id="username" value="#{loginBean.username}" required="true" />
 						</div>
 						<div class="form-group">
-							<label for="password">Senha</label> <input type="password"
-								id="password" name="password" />
+							<label for="password">Senha</label>
+							<h:inputSecret id="password" value="#{loginBean.password}" required="true" />
 						</div>
-						<button type="submit">Entrar</button>
+						<h:commandButton value="Entrar" action="#{loginBean.login}" />
+						
 						<br /> <br />
-
+						
 						<div class="additional-options">
-							<a href="recuperarSenha.xhtml">Esqueci minha senha</a> <span
-								class="separator"> | </span> <a href="cadastro.xhtml">Cadastrar</a>
+							<a href="recuperarSenha.xhtml">Esqueci minha senha</a>
+							<span class="separator"> | </span>
+							<a href="cadastro.xhtml">Cadastrar</a>
 						</div>
-					</form>
+					</h:form>
 				</div>
 			</div>
 		</div>
-			
-
 	</ui:define>
 </ui:composition>
