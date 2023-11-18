@@ -31,6 +31,11 @@ public class HistoricoReservaCarroDAO extends RepositorioCRUD<HistoricoReservaCa
 			predicate = criteriaBuilder.and(predicate, criteriaBuilder
 					.like(criteriaBuilder.lower(entityRoot.get("login")), "%" + filtro.getLogin().toLowerCase() + "%"));
 		}
+		
+		if (filtro.getTelefone() != null && !filtro.getTelefone().isEmpty()) {
+			predicate = criteriaBuilder.and(predicate,
+					criteriaBuilder.equal(entityRoot.get("telefone"), filtro.getTelefone()));
+		}
 
 		if (filtro.getDataReservaInicio() != null) {
 

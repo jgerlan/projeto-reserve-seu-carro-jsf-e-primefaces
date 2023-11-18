@@ -20,6 +20,7 @@ import com.projetoes.ecommerce.model.HistoricoReservaCarro;
 import com.projetoes.ecommerce.model.StatusCarro;
 import com.projetoes.ecommerce.model.Usuario;
 import com.projetoes.ecommerce.respository.CarroDAO;
+import com.projetoes.ecommerce.respository.HistoricoReservaCarroDAO;
 import com.projetoes.ecommerce.respository.UsuarioDAO;
 import com.projetoes.ecommerce.service.CadastroCarroService;
 import com.projetoes.ecommerce.service.CadastroHistoricoReservaCarrosService;
@@ -36,6 +37,8 @@ public class GestaoCarrosBean implements Serializable {
 	
 	@Inject
 	private UsuarioDAO usuarios;
+	
+	private HistoricoReservaCarroDAO historicoReservaCarros;
 	
 	@Inject
 	private CadastroHistoricoReservaCarrosService historicosReservaCarrosService;
@@ -182,7 +185,8 @@ public class GestaoCarrosBean implements Serializable {
 	}
 	
 	public void reservarCarro() {
-		Usuario usuarioReserva = usuarios.buscarPorNomeEDataNascimento(usuario.getNome(), usuario.getDataNasc());
+		usuario.setTelefone(usuario.getTelefone().replaceAll("\\D", ""));
+		Usuario usuarioReserva = usuarios.buscarPorNomeETelefone(usuario.getNome(), usuario.getTelefone());
 		
 		if(usuarioReserva == null) {
 			messages.erro("Usuario não encontrado!");
@@ -202,6 +206,7 @@ public class GestaoCarrosBean implements Serializable {
         	historicoReservaCarro.setCarro(this.carro);
         	historicoReservaCarro.setDataReserva(new Date());
         	historicoReservaCarro.setLogin(usuarioReserva.getLogin());
+        	historicoReservaCarro.setTelefone(usuarioReserva.getTelefone());
         	historicoReservaCarro.setValor(this.carro.getValor());
     		
     		historicosReservaCarrosService.salvar(historicoReservaCarro, this.carro);
@@ -219,6 +224,17 @@ public class GestaoCarrosBean implements Serializable {
         	this.usuario = new Usuario();
             e.printStackTrace();
         }
+	}
+	
+	public void liberarCarro() {
+		// Buscar carro
+		
+		DadosCadastroVo dadosCadastroVo = carro.getDadosCadastro();
+		dadosCadastroVo.setUsuarioIdAtualizacao(1);
+		dadosCadastroVo.setDataAtualizacao(new Date());
+		
+		// Buscar histórico
+		// Chamar serviço carro para atualizar carro e historico na mesma transaction.
 	}
 
 	public List<Carro> getListaCarros() {

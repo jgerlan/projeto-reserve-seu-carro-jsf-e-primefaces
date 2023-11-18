@@ -17,7 +17,7 @@
 				<p:autoUpdate />
 			</p:messages>
 			<p:commandButton icon="pi pi-chevron-left"
-				action="#{gestaoHomeBean.index}" title="Voltar">
+				action="#{gestaoHomeBean.index}" title="Voltar" process="@this">
 			</p:commandButton>
 			<div class="info-container">
 				<div class="car-info">
@@ -44,21 +44,20 @@
 				</div>
 			</div>
 
-			<p:dialog id="confirmationDialog" widgetVar="confirmationDialogWidgetVar" styleClass="inputsPart"
-				header="Confirmação de reserva" modal="true" showEffect="fade" draggable="false"
-				hideEffect="fade">
+			<p:dialog id="confirmationDialog"
+				widgetVar="confirmationDialogWidgetVar" styleClass="inputsPart"
+				header="Confirmação de reserva" modal="true" showEffect="fade"
+				draggable="false" hideEffect="fade">
 				<h:panelGrid id="confirmatioUsuarioPanelGrid" columns="2">
 
 					<p:outputLabel value="Nome: " for="usuarioDialogNome" />
 					<p:inputText id="usuarioDialogNome" size="80" maxlength="100"
 						value="#{gestaoCarrosBean.usuario.nome}" required="true" />
 
-					<p:outputLabel value="Data Nascimento: "
-						for="usuarioDialogDataNascimento" />
-					<p:datePicker id="usuarioDialogDataNascimento" pattern="dd/MM/yyyy"
-						value="#{gestaoCarrosBean.usuario.dataNasc}" locale="br"
-						monthNavigator="true" yearNavigator="true" showIcon="true"
-						required="true" />
+					<p:outputLabel for="usuarioDialogTelefone" value="Telefone: " />
+					<p:inputMask id="usuarioDialogTelefone"
+						value="#{gestaoCarrosBean.usuario.telefone}"
+						mask="(99) 9 9999-9999" required="true" />
 				</h:panelGrid>
 
 				<p:commandButton id="confirmaReservaCommandButton" value="Reservar"

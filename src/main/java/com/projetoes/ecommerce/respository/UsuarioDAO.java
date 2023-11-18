@@ -1,6 +1,5 @@
 package com.projetoes.ecommerce.respository;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,7 +30,7 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		return query.getResultList();
 	}
 
-	public Usuario buscarPorNomeEDataNascimento(String nome, Date dataNascimento) {
+	public Usuario buscarPorNomeETelefone(String nome, String telefone) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
 		Root<Usuario> usuarioRoot = criteriaQuery.from(Usuario.class);
@@ -41,7 +40,7 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		predicate = criteriaBuilder.and(predicate,
 				criteriaBuilder.like(criteriaBuilder.lower(usuarioRoot.get("nome")), "%" + nome.toLowerCase() + "%"));
 
-		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(usuarioRoot.get("dataNasc"), dataNascimento));
+		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(usuarioRoot.get("telefone"), telefone));
 
 		criteriaQuery.where(predicate);
 
@@ -69,6 +68,11 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 					.like(criteriaBuilder.lower(usuarioRoot.get("nome")), "%" + filtro.getNome().toLowerCase() + "%"));
 		}
 
+		if (filtro.getTelefone() != null && !filtro.getTelefone().isEmpty()) {
+			predicate = criteriaBuilder.and(predicate,
+					criteriaBuilder.equal(usuarioRoot.get("telefone"), filtro.getTelefone()));
+		}
+
 		if (filtro.getStatus() != null) {
 			predicate = criteriaBuilder.and(predicate,
 					criteriaBuilder.equal(usuarioRoot.get("status"), filtro.getStatus()));
@@ -93,37 +97,27 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 
 		return getEntityManager().createQuery(criteriaQuery).getResultList();
 	}
-	
+
 	// métodos adicionados:
 
-    public boolean existeNomeUsuario(String nomeUsuario) {
-        TypedQuery<Long> query = getEntityManager()
-                .createQuery("select count(u) from Usuario u where u.nome = :nomeUsuario", Long.class);
-        query.setParameter("nomeUsuario", nomeUsuario);
-        return query.getSingleResult() > 0;
-    }
+	public boolean existeNomeUsuario(String nomeUsuario) {
+		TypedQuery<Long> query = getEntityManager()
+				.createQuery("select count(u) from Usuario u where u.nome = :nomeUsuario", Long.class);
+		query.setParameter("nomeUsuario", nomeUsuario);
+		return query.getSingleResult() > 0;
+	}
+	
+	public Usuario autenticar(String username, String password) {
+		TypedQuery<Usuario> query = getEntityManager().createQuery(
+				"SELECT u FROM Usuario u WHERE u.login = :username AND u.senha = :password", Usuario.class);
+		query.setParameter("username", username);
+		query.setParameter("password", password);
 
-    public void salvar(Usuario usuario) {
-        if (usuario.getId() == 0) {
-            // Se o ID for 0, é um novo usuário, então persiste
-            getEntityManager().persist(usuario);
-        } else {
-            // Se o ID não for 0, é um usuário existente
-            getEntityManager().merge(usuario);
-        }
-    }
-    
-    public Usuario autenticar(String username, String password) {
-        TypedQuery<Usuario> query = getEntityManager()
-                .createQuery("SELECT u FROM Usuario u WHERE u.login = :username AND u.senha = :password", Usuario.class);
-        query.setParameter("username", username);
-        query.setParameter("password", password);
-
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            // Usuário não encontrado ou senha incorreta
-            return null;
-        }
-    }
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			// Usuário não encontrado ou senha incorreta
+			return null;
+		}
+	}
 }

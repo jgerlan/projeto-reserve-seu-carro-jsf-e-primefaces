@@ -7,7 +7,9 @@ public class FiltroListarHistoricoReservaCarros implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String Login;
+	private String login;
+	
+	private String telefone;
 
 	private double valorInicio;
 	
@@ -20,15 +22,23 @@ public class FiltroListarHistoricoReservaCarros implements Serializable {
 	private Date dataLiberacaoInicio;
 	
 	private Date dataLiberacaoFim;
-
+	
 	public String getLogin() {
-		return Login;
+		return login;
 	}
 
 	public void setLogin(String login) {
-		Login = login;
+		this.login = login;
 	}
-	
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
 	public double getValorInicio() {
 		return valorInicio;
 	}

@@ -36,6 +36,9 @@ public class Usuario implements Serializable {
 
 	@Column(nullable = false, length = 30)
 	private String nome;
+	
+	@Column(unique = true, nullable = false, length = 30)
+	private String telefone;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -85,6 +88,14 @@ public class Usuario implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public StatusUsuario getStatus() {

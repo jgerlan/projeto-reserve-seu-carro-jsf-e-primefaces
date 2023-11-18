@@ -24,6 +24,13 @@
 							<p:inputText id="busca-login"
 								value="#{gestaoHistoricoReservaCarrosBean.filtros.login}" label="Login" />
 						</p:column>
+						
+						<p:column>
+							<p:outputLabel for="busca-telefone" value="Telefone: " />
+							<p:inputMask id="busca-telefone"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.telefone}"
+								mask="(99) 9 9999-9999" />
+						</p:column>
 
 						<p:column>
 							<p:outputLabel for="busca-valorinicio" value="Valor de: " />
@@ -86,7 +93,22 @@
 				</p:panelGrid>
 			</p:panel>
 			
-			<p:spacer styleClass="espacoDois" />
+			<p:spacer styleClass="espacoUm" />
+
+			<p:toolbar id="toolbar-gestao-historico-reservas">
+				<f:facet name="right">
+
+					<p:commandButton value="Exportar pdf por Usuário" icon="pi pi-fw pi-file-pdf"
+						actionListener="#{gestaoHistoricoReservaCarrosBean.prepararExportacao()}"
+						oncomplete="PF('exportarReservasDialogWidgetVar').show()"
+						update=":frm-historico-reserva:exportarReservasDialog" process="@this">
+						<p:resetInput target="exportarReservasDialog" />
+					</p:commandButton>
+
+				</f:facet>
+			</p:toolbar>
+
+			<p:spacer styleClass="espacoUm" />
 
 			<p:dataTable id="historicoReservaCarroDataTable"
 				value="#{gestaoHistoricoReservaCarrosBean.listaHistoricoReserva}" var="historico"
@@ -97,19 +119,58 @@
 					<h:outputText value="#{historico.login}" />
 				</p:column>
 				
+				<p:column headerText="Telefone" sortBy="#{historico.telefone}">
+					<h:outputText value="#{gestaoHistoricoReservaCarrosBean.getFormattedTelefone(historico.telefone)}" />
+				</p:column>
+				
 				<p:column headerText="Valor" sortBy="#{historico.valor}">
-					<h:outputText value="#{historico.valor}" />
+					<h:outputText value="#{historico.valor}" >
+					    <f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Data Reserva" sortBy="#{historico.dataReserva}">
-					<h:outputText value="#{historico.dataReserva}" />
+				<p:column headerText="Data e Hora Reserva" sortBy="#{historico.dataReserva}">
+					<h:outputText value="#{historico.dataReserva}" >
+					    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Data Liberação">
-					<h:outputText value="#{historico.dataLiberacao}" />
+				<p:column headerText="Data e Hora Liberação" sortBy="#{historico.dataLiberacao}">
+					<h:outputText value="#{historico.dataLiberacao}" >
+					    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
 				</p:column>
 
 			</p:dataTable>
+			
+			<p:dialog id="exportarReservasDialog" widgetVar="exportarReservasDialogWidgetVar" styleClass="inputsPart"
+				header="Confirmar dados Usuário" modal="true" showEffect="fade" draggable="false"
+				hideEffect="fade">
+				<h:panelGrid id="confirmatioExportarReservasPanelGrid" columns="2">
+
+					<p:outputLabel value="Nome: " for="exportarDialogNome" />
+					<p:inputText id="exportarDialogNome" size="80" maxlength="100"
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}" required="true" />
+						
+					<p:outputLabel value="Telefone: " for="exportarDialogTelefone" />
+					<p:inputText id="exportarDialogTelefone" size="80" maxlength="100"
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}" required="true" />
+
+					<p:outputLabel value="Data Cadastro: "
+						for="exportarDialogDataCadastro" />
+					<p:datePicker id="exportarDialogDataCadastro" pattern="dd/MM/yyyy"
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.dadosCadastro.dataCriacao}" locale="br"
+						monthNavigator="true" yearNavigator="true" showIcon="true"
+						required="true" />
+				</h:panelGrid>
+
+				<p:commandButton id="exportaReservaCommandButton" value="Exportar PDF"
+					styleClass="commandButtonUsuario"
+					actionListener="#{gestaoHistoricoReservaCarrosBean.exportarPorUsuario()}"
+					oncomplete="PF('exportarReservasDialogWidgetVar').hide()"
+					update="exportarReservasDialog" process="exportarReservasDialog" />
+
+			</p:dialog>
 		</h:form>
 
 	</ui:define>

@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import com.projetoes.ecommerce.model.Usuario;
 import com.projetoes.ecommerce.respository.UsuarioDAO;
+import com.projetoes.ecommerce.service.CadastroUsuarioService;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +20,9 @@ public class CadastroBean implements Serializable {
 
     @Inject
     private UsuarioDAO usuarioDAO;
+    
+    @Inject
+	private CadastroUsuarioService cadastroUsuarioService;
 
     private Usuario novoUsuario = new Usuario();
 
@@ -49,7 +53,7 @@ public class CadastroBean implements Serializable {
                 }
             }
 
-            usuarioDAO.salvar(novoUsuario);
+            cadastroUsuarioService.salvar(novoUsuario);
 
             novoUsuario = new Usuario();
 

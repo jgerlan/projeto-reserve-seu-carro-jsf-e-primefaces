@@ -9,6 +9,8 @@ public class FiltroListarUsuarios implements Serializable {
 	private String login;
 
 	private String nome;
+	
+	private String telefone;
 
 	private StatusUsuario status;
 
@@ -34,6 +36,14 @@ public class FiltroListarUsuarios implements Serializable {
 		this.nome = nome;
 	}
 	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
 	public StatusUsuario getStatus() {
 		return status;
 	}

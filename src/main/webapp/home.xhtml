@@ -94,7 +94,9 @@
 				</p:column>
 
 				<p:column headerText="Valor" sortBy="#{carro.valor}">
-					<h:outputText value="#{carro.valor}" />
+					<h:outputText value="#{carro.valor}" >
+					    <f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Data modelo" sortBy="#{carro.anoModelo}">

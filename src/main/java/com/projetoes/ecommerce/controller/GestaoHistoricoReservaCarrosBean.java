@@ -1,6 +1,7 @@
 package com.projetoes.ecommerce.controller;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -11,6 +12,7 @@ import javax.inject.Named;
 
 import com.projetoes.ecommerce.model.FiltroListarHistoricoReservaCarros;
 import com.projetoes.ecommerce.model.HistoricoReservaCarro;
+import com.projetoes.ecommerce.model.Usuario;
 import com.projetoes.ecommerce.respository.HistoricoReservaCarroDAO;
 import com.projetoes.ecommerce.util.FacesMessages;
 
@@ -29,6 +31,8 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 	private HistoricoReservaCarro historicoReservaCarro;
 
 	private List<HistoricoReservaCarro> listaHistoricoReserva;
+	
+	private Usuario usuario;
 
 	private FiltroListarHistoricoReservaCarros filtros;
 	
@@ -53,6 +57,7 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 	}
 
 	public void pesquisar() {
+		filtros.setTelefone(filtros.getTelefone().replaceAll("\\D", ""));
 		this.listaHistoricoReserva = historicosReservaCarros.listarPorFiltros(filtros);
 	}
 
@@ -60,6 +65,38 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 		this.historicoReservaCarro = new HistoricoReservaCarro();
 		filtros = new FiltroListarHistoricoReservaCarros();
 		listaHistoricoReserva = historicosReservaCarros.listarPorFiltros(filtros);
+	}
+	
+	public void prepararExportacao() {
+		this.historicoReservaCarro = new HistoricoReservaCarro();
+		this.usuario = new Usuario();
+	}
+	
+	public void exportarPorUsuario() {
+		
+	}
+	
+	public String getFormattedTelefone(String telefone) {
+        if (!telefone.isEmpty()) {
+            // Remove non-digit characters
+            String cleaned = telefone.replaceAll("\\D", "");
+
+            // Apply the custom phone number format (99) 9 9999-9999
+            return MessageFormat.format("({0}) {1} {2}-{3}",
+                    cleaned.substring(0, 2),
+                    cleaned.substring(2, 3),
+                    cleaned.substring(3, 7),
+                    cleaned.substring(7));
+        }
+        return "";
+    }
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public HistoricoReservaCarroDAO getHistoricosReservaCarros() {

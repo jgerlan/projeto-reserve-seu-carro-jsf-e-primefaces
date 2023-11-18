@@ -35,6 +35,9 @@ public class HistoricoReservaCarro implements Serializable {
 
 	@Column(nullable = false)
 	private String login;
+	
+	@Column(nullable = false, length = 30)
+	private String telefone;
 
 	@Column(nullable = false)
 	private Double valor;
@@ -69,6 +72,14 @@ public class HistoricoReservaCarro implements Serializable {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public Carro getCarro() {
