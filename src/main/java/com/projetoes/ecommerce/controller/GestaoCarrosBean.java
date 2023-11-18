@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -14,9 +16,13 @@ import org.primefaces.PrimeFaces;
 import com.projetoes.ecommerce.model.Carro;
 import com.projetoes.ecommerce.model.DadosCadastroVo;
 import com.projetoes.ecommerce.model.FiltroListarCarros;
+import com.projetoes.ecommerce.model.HistoricoReservaCarro;
 import com.projetoes.ecommerce.model.StatusCarro;
+import com.projetoes.ecommerce.model.Usuario;
 import com.projetoes.ecommerce.respository.CarroDAO;
+import com.projetoes.ecommerce.respository.UsuarioDAO;
 import com.projetoes.ecommerce.service.CadastroCarroService;
+import com.projetoes.ecommerce.service.CadastroHistoricoReservaCarrosService;
 import com.projetoes.ecommerce.util.FacesMessages;
 
 @Named
@@ -29,12 +35,20 @@ public class GestaoCarrosBean implements Serializable {
 	private CarroDAO carros;
 	
 	@Inject
+	private UsuarioDAO usuarios;
+	
+	@Inject
+	private CadastroHistoricoReservaCarrosService historicosReservaCarrosService;
+	
+	@Inject
 	private CadastroCarroService cadastroCarroService;
 	
 	@Inject
 	private FacesMessages messages;
 
 	private Carro carro;
+	
+	private Usuario usuario;
 
 	private List<Carro> listaCarros;
 
@@ -45,11 +59,26 @@ public class GestaoCarrosBean implements Serializable {
 		filtros = new FiltroListarCarros();
 		filtros.setStatus(StatusCarro.Livre);
 		listaCarros = carros.listarPorFiltros(filtros);
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+        Flash flash = facesContext.getExternalContext().getFlash();
+
+        // Retrieve the message from the Flash scope
+        String successMessage = (String) flash.get("successMessage");
+
+        if (successMessage != null) {
+        	messages.info(successMessage);
+        }
 	}
 	
 	public String detalhes(Long id) {
 		this.carro = carros.porId(id);
+		this.usuario = new Usuario();
 		return "detalheCarro?faces-redirect=true";
+	}
+	
+	public String home() {
+		return "home?faces-redirect=true";
 	}
 
 	public void pesquisar() {
@@ -151,6 +180,46 @@ public class GestaoCarrosBean implements Serializable {
 				&& this.filtros.getAnoFabricacaoFim() != null && this.filtros.getAnoModeloInicio() != null
 				&& this.filtros.getAnoModeloInicio() != null;
 	}
+	
+	public void reservarCarro() {
+		Usuario usuarioReserva = usuarios.buscarPorNomeEDataNascimento(usuario.getNome(), usuario.getDataNasc());
+		
+		if(usuarioReserva == null) {
+			messages.erro("Usuario não encontrado!");
+			this.usuario = new Usuario();
+			return;
+		}
+		
+        try {
+        	carro.setStatus(StatusCarro.Reservado);
+        	DadosCadastroVo dadosCadastroVo = carro.getDadosCadastro();
+			dadosCadastroVo.setUsuarioIdAtualizacao(1);
+			dadosCadastroVo.setDataAtualizacao(new Date());
+			carro.setDadosCadastro(dadosCadastroVo);
+
+        	HistoricoReservaCarro historicoReservaCarro = new HistoricoReservaCarro();
+        	historicoReservaCarro.setUsuario(usuarioReserva);
+        	historicoReservaCarro.setCarro(this.carro);
+        	historicoReservaCarro.setDataReserva(new Date());
+        	historicoReservaCarro.setLogin(usuarioReserva.getLogin());
+        	historicoReservaCarro.setValor(this.carro.getValor());
+    		
+    		historicosReservaCarrosService.salvar(historicoReservaCarro, this.carro);
+    		
+    		FacesContext facesContext = FacesContext.getCurrentInstance();
+            Flash flash = facesContext.getExternalContext().getFlash();
+
+            flash.put("successMessage", "Carro reservado com sucesso!");
+            
+            String redirectURL = facesContext.getExternalContext().getRequestContextPath() + "/home.xhtml";
+            
+        	facesContext.getExternalContext().redirect(redirectURL);
+        } catch (Exception e) {
+        	messages.erro("Erro ao reservar carro!");
+        	this.usuario = new Usuario();
+            e.printStackTrace();
+        }
+	}
 
 	public List<Carro> getListaCarros() {
 		return listaCarros;
@@ -179,5 +248,13 @@ public class GestaoCarrosBean implements Serializable {
 	public StatusCarro[] getStatus() {
         return StatusCarro.values();
     }
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 }

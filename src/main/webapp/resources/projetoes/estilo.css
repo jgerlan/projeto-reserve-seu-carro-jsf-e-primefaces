@@ -166,6 +166,10 @@ form .ui-inputfield{
     padding: 4px 10px;
 }
 
+#frm-historico-reserva .ui-panelgrid .ui-panelgrid-cell {
+    padding: 4px 10px;
+}
+
 .panelgrid-row .ui-panelgrid-cell {
     width: auto;
 }

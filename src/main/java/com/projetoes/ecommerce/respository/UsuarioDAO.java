@@ -1,9 +1,11 @@
 package com.projetoes.ecommerce.respository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -27,6 +29,27 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		query.setParameter(1, "%" + nome + "%");
 
 		return query.getResultList();
+	}
+
+	public Usuario buscarPorNomeEDataNascimento(String nome, Date dataNascimento) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
+		Root<Usuario> usuarioRoot = criteriaQuery.from(Usuario.class);
+
+		Predicate predicate = criteriaBuilder.conjunction();
+
+		predicate = criteriaBuilder.and(predicate,
+				criteriaBuilder.like(criteriaBuilder.lower(usuarioRoot.get("nome")), "%" + nome.toLowerCase() + "%"));
+
+		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(usuarioRoot.get("dataNasc"), dataNascimento));
+
+		criteriaQuery.where(predicate);
+
+		try {
+			return getEntityManager().createQuery(criteriaQuery).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<Usuario> listarPorFiltros(FiltroListarUsuarios filtro) {
@@ -57,8 +80,8 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		}
 
 		if (filtro.getDeDataNasc() != null) {
-			predicate = criteriaBuilder.and(predicate, criteriaBuilder
-					.greaterThanOrEqualTo(usuarioRoot.get("dataNasc"), filtro.getDeDataNasc()));
+			predicate = criteriaBuilder.and(predicate,
+					criteriaBuilder.greaterThanOrEqualTo(usuarioRoot.get("dataNasc"), filtro.getDeDataNasc()));
 		}
 
 		if (filtro.getAteDataNasc() != null) {

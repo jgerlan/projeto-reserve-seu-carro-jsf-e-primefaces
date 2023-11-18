@@ -17,9 +17,6 @@
 
 		<h:form id="frm-carros">
 			<p:panel id="painelBusca" header="Busca">
-			<p:messages id="messages" closable="true" >
-				<p:autoUpdate />
-			</p:messages>
 				<p:panelGrid styleClass="panelgrid-label-input">
 					<p:row styleClass="panelgrid-row">
 						<p:column>
@@ -89,22 +86,6 @@
 			</p:panel>
 
 			<p:spacer styleClass="espacoDois" />
-								</f:facet>
-				</p:panelGrid>
-			</p:panel>
-
-			<p:spacer styleClass="espacoUm" />
-
-			<p:toolbar id="toolbar-gestao-carro">
-				<f:facet name="right">
-
-					<p:commandButton value="Novo carro" icon="pi pi-fw pi-user-plus"
-						actionListener="#{gestaoCarrosBean.prepararNovoCarro}"
-						oncomplete="PF('carroDialogWidgetVar').show()"
-						update=":frm-carros:carroDialog" process="@this">
-						<p:resetInput target="carroDialog" />
-					</p:commandButton>
-			
 
 			<p:dataTable id="carrosDataTable"
 				value="#{gestaoCarrosBean.listaCarros}" var="carro"
@@ -119,128 +100,13 @@
 					<h:outputText value="#{carro.modelo}" />
 				</p:column>
 
-			<p:column headerText="Tipo" sortBy="#{carro.tipo}">
-					<h:outputText value="#{carro.tipo}" />
+				<p:column headerText="Valor" sortBy="#{carro.valor}">
+					<h:outputText value="#{carro.valor}" />
 				</p:column>
 
-				<p:column id="botoes-acao" name="botoes-acao"
-					styleClass="button-container">
-
-					<p:commandButton id="editCommandButton" title="Editar"
-						icon="pi pi-user-edit" styleClass="ui-button-warning"
-						actionListener="#{gestaoCarrosBean.prepararEdicao(carro.id)}"
-						update=":frm-carros:carroDialog"
-						oncomplete="PF('carroDialogWidgetVar').show()" process="@this">
-						<p:resetInput target=":frm-carros:carroDialog" />
-					</p:commandButton>
-
-					<p:commandButton id="deleteCommandButton" title="Excluir"
-						icon="pi pi-trash" styleClass="ui-button-danger"
-						actionListener="#{gestaoCarroosBean.excluir(carro.id)}"
-						process="@this"
-						update=":frm-carros:messages :frm-carros:carrosDataTable">
-						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
-							message="Posso excluir o carro?" />
-					</p:commandButton>
+				<p:column headerText="Data modelo" sortBy="#{carro.anoModelo}">
+					<h:outputText value="#{carro.anoModelo}" />
 				</p:column>
-					</p:column>
-
-			</p:dataTable>
-
-			<!-- Diálogo criar/editar -->
-
-			<p:dialog id="carroDialog" styleClass="inputsPart" header="Carro"
-				widgetVar="carrooDialogWidgetVar" modal="true" resizable="false"
-				draggable="false" closeOnEscape="true">
-				<p:messages id="carroMessages" />
-
-				<p:defaultCommand target="salvarCommandButton" scope="carroDialog" />
-
-				<h:panelGrid id="carroPanelGrid" columns="2"
-					rendered="#{gestaoCarrosBean.carro ne null}">
-
-					<p:outputLabel value="Nome: " for="carroDialogNome" />
-					<p:inputText id="carroDialogNome" size="80" maxlength="120"
-						value="#{gestaoCarrosBean.carro.nome}" required="true" />
-
-					<p:outputLabel value="Login: " for="carroDialogLogin" />
-					<p:inputText id="carroDialogLogin" size="80" maxlength="80"
-						value="#{gestaoCarrosBean.carro.login}" required="true"
-						validatorMessage="Formato de email inválido!">
-						<f:validateRegex
-							pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
-					</p:inputText>
-
-					<p:outputLabel value="Data Nascimento: "
-						for="carroDialogDataNascimento" />
-					<p:datePicker id="carroDialogDataNascimento" pattern="dd/MM/yyyy"
-						value="#{gestaoCarrosBean.carro.dataNasc}" locale="br"
-						monthNavigator="true" yearNavigator="true" showIcon="true"
-						required="true" />
-
-					<p:outputLabel value="Tipo carro: " for="carroDialogTipo" />
-					<p:selectOneMenu id="carroDialogTipo"
-						value="#{gestaoCarrosBean.carro.tipo}" required="true">
-						<f:selectItem itemLabel="Selecionar Tipo" itemValue="" />
-						<f:selectItems value="#{gestaoCarrosBean.tipoOptions}"
-							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-					</p:selectOneMenu>
-
-					<h:outputLabel for="carroDialogStatus" value="Status: " />
-					<p:selectOneMenu id="carroDialogStatus"
-						value="#{gestaoCarrosBean.carro.status}" required="true">
-						<f:selectItem itemLabel="Selecionar Status" itemValue="" />
-						<f:selectItems value="#{gestaoCarrosBean.statusOptions}"
-							var="status" itemLabel="#{status.descricao}"
-							itemValue="#{status}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel value="Senha: " for="carroDialogSenha"
-						rendered="#{gestaoCarrosBean.carro.id == 0}" />
-					<p:password id="carroDialogSenha" size="20" maxlength="80"
-						rendered="#{gestaoCarrosBean.carro.id == 0}"
-						value="#{gestaoCarrosBean.carro.senha}"
-						match="carroDialogSenhaConfirmar" toggleMask="true"
-						redisplay="true" required="true">
-						<f:validateLength minimum="6"></f:validateLength>
-					</p:password>
-
-					<p:outputLabel value="Senha: " for="carroDialogSenhaConfirmar"
-						rendered="#{gestaoCarrosBean.carro.id == 0}" />
-					<p:password id="carroDialogSenhaConfirmar" size="20"
-						rendered="#{gestaoCarrosBean.carro.id == 0}" maxlength="80"
-						value="#{gestaoCarrosBean.carro.senha}" toggleMask="true"
-						redisplay="true" required="true" />
-
-					<p:outputLabel id="salvarCommandButtonLabel"
-						rendered="#{gestaoCarrosBean.carro.id == 0}" />
-					<p:commandButton id="salvarCommandButton" value="Salvar"
-						styleClass="commandButtonCarro"
-						rendered="#{gestaoCarrosBean.carro.id == 0}"
-						actionListener="#{gestaoCarrosBean.salvar}"
-						update="carroPanelGrid carroMessages"
-						oncomplete="if (!args.validationFailed &amp;&amp; args.carroSalvo) PF('carroDialogWidgetVar').hide()"
-						process="carroDialog" />
-
-					<p:outputLabel id="atualizarCommandButtonLabel"
-						rendered="#{gestaoCarrosBean.carro.id != 0}" />
-					<p:commandButton id="atualizarCommandButton" value="Atualizar"
-						styleClass="commandButtonCarro"
-						rendered="#{gestaoCarrosBean.carro.id != 0}"
-						actionListener="#{gestaoCarrosBean.atualizar}"
-						update="carroPanelGrid carroMessages"
-						oncomplete="if (!args.validationFailed &amp;&amp; args.carroAtualizado) PF('carroDialogWidgetVar').hide()"
-						process="carroDialog" />
-				</h:panelGrid>
-			</p:dialog>
-
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Sim" type="button"
-				styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-				<p:commandButton value="Não" type="button"
-					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-			</p:confirmDialog>
-		</h:form>
 
 				<p:column headerText="Descrição">
 					<h:outputText value="#{carro.descricao}" />
