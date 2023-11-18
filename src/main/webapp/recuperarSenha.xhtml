@@ -19,32 +19,28 @@
             <h:form>
                 <div class="form-group">
                     <label for="username">Nome de Usuário</label>
-<<<<<<< HEAD
                     <input type="text" id="login" name="username" />
                 </div>
                 <div class="form-group">
                     <label for="dataNascimento">Data de Nascimento</label>
                     <input type="date" id="dataNasc" name="dataNasc" />
                 </div>
-                 <h:commandButton value="Cadastrar" action="#{RecuperarSenhaBean.getSenha}" />
-                <!-- <button type="submit">Recuperar Senha</button> -->
-            </form>
-=======
-                    <h:inputText id="username" value="#{recuperarSenhaBean.username}" required="true" />
+                 <h:commandButton value="Recuperar Senha" action="#{RecuperarSenhaBean.getSenha}" />
+            </h:form>
+            
+                 <h:inputText id="username" value="#{recuperarSenhaBean.login}" required="true" />
                 </div>
                 <div class="form-group">
                     <label for="dataNascimento">Data de Nascimento</label>
                     <!-- Utilizando p:calendar do PrimeFaces -->
-                    <p:calendar id="dataNascimento" value="#{recuperarSenhaBean.dataNascimento}" pattern="dd/MM/yyyy" showOn="button" required="true" />
+                    <p:calendar id="dataNascimento" value="#{recuperarSenhaBean.dataNasc}" pattern="dd/MM/yyyy" showOn="button" required="true" />
                 </div>
-                <h:commandButton value="Recuperar Senha" action="#{recuperarSenhaBean.recuperarSenha}" />
+                <h:commandButton value="Recuperar Senha" action="#{recuperarSenhaBean.getSenha}" />
             </h:form>
             <div class="additional-options">
     			<h:link value="Voltar para o Login" outcome="login.xhtml?faces-redirect=true" />
 			</div>
->>>>>>> 8daaa9bcacffd4daf00f0f05d1e5e1f5ca7ea41e
         </div>
-    </div>
 
 </ui:define>
 </ui:composition>

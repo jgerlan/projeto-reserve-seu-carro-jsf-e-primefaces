@@ -7,7 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.projetoes.ecommerce.respository.UsuarioDAO;
 
 
 @Named
@@ -15,6 +18,13 @@ import javax.inject.Named;
 public class RecuperarSenhaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+
+    @Inject
+    private UsuarioDAO usuarioDAO;
+
+    private String login;
+    private String dataNasc;
 
 	public static String getSenha(String login, String dataNasc) {
 	        String senha = null;
@@ -57,5 +67,24 @@ public class RecuperarSenhaBean implements Serializable {
 
 	        return senha;
 	    }
+	
+	public String getLogin() {
+		return login;
+	}
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+
+	public String getDataNasc() {
+		return dataNasc;
+	}
+
+
+	public void setDataNasc(String dataNasc) {
+		this.dataNasc = dataNasc;
+	}
 
 }
