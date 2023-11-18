@@ -24,11 +24,12 @@ public class CadastroBean implements Serializable {
 
     public String cadastrar() {
         try {
-            if (!novoUsuario.getSenha().equals(novoUsuario.getConfirmacaoSenha())) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "As senhas não coincidem.", null));
-                return null;
-            }
+			/*
+			 * if (!novoUsuario.getSenha().equals(novoUsuario.getConfirmacaoSenha())) {
+			 * FacesContext.getCurrentInstance().addMessage(null, new
+			 * FacesMessage(FacesMessage.SEVERITY_ERROR, "As senhas não coincidem.", null));
+			 * return null; }
+			 */
 
             if (usuarioDAO.existeNomeUsuario(novoUsuario.getNome())) {
                 FacesContext.getCurrentInstance().addMessage(null,
