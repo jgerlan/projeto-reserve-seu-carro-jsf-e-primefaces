@@ -8,31 +8,30 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="WEB-INF/template/Layout.xhtml">
 
-		<ui:define name="conteudo">
-		<h:outputStylesheet library="projetoes" name="estilo-login.css" />
+    <ui:define name="conteudo">
+        <h:outputStylesheet library="projetoes" name="estilo-login.css" />
 
-    <title>Recuperação de Senha</title>
+        <title>Recuperação de Senha</title>
 
-    <div class="recovery-container">
-        <div class="recovery-section">
-            <h1>Recuperação de Senha</h1>
-            <h:form>
-                <div class="form-group">
-                    <label for="username">Nome de Usuário</label>
-                    <h:inputText id="username" value="#{recuperarSenhaBean.username}" required="true" />
+        <div class="recovery-container">
+            <div class="recovery-section">
+                <h1>Recuperação de Senha</h1>
+                <h:form>
+                    <div class="form-group">
+                        <label for="username">Nome de Usuário</label>
+                        <input type="text" id="login" name="username" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento</label>
+                        <input type="date" id="dataNasc" name="dataNasc" />
+                    </div>
+                    <h:commandButton value="Recuperar Senha" action="#{RecuperarSenhaBean.getSenha}" />
+                </h:form>
+
+                <div class="additional-options">
+                    <h:link value="Voltar para o Login" outcome="login.xhtml?faces-redirect=true" />
                 </div>
-                <div class="form-group">
-                    <label for="dataNascimento">Data de Nascimento</label>
-                    <!-- Utilizando p:calendar do PrimeFaces -->
-                    <p:calendar id="dataNascimento" value="#{recuperarSenhaBean.dataNascimento}" pattern="dd/MM/yyyy" showOn="button" required="true" />
-                </div>
-                <h:commandButton value="Recuperar Senha" action="#{recuperarSenhaBean.recuperarSenha}" />
-            </h:form>
-            <div class="additional-options">
-    			<h:link value="Voltar para o Login" outcome="login.xhtml?faces-redirect=true" />
-			</div>
+            </div>
         </div>
-    </div>
-
-</ui:define>
+    </ui:define>
 </ui:composition>
