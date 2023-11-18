@@ -7,67 +7,68 @@
 	template="WEB-INF/template/Layout.xhtml">
 
 	<ui:define name="titulo">
-		Gestão Histórico Reserva de Carros
+		Gestão Carros
 	</ui:define>
 
 	<ui:define name="conteudo">
 		<f:metadata>
-			<f:viewAction action="#{gestaoCarrosBean.todosCarros}" />
+			<f:viewAction action="#{gestaoHistoricoReservaCarrosBean.todosHistoricos}" />
 		</f:metadata>
 
-		<h:form id="frm-carros">
+		<h:form id="frm-historico-reserva">
 			<p:panel id="painelBusca" header="Busca">
 				<p:panelGrid styleClass="panelgrid-label-input">
 					<p:row styleClass="panelgrid-row">
 						<p:column>
-							<h:outputLabel for="busca-marca" value="Marca: " />
-							<p:inputText id="busca-marca"
-								value="#{gestaoCarrosBean.filtros.marca}" label="Marca" />
-						</p:column>
-
-						<p:column>
-							<h:outputLabel for="busca-modelo" value="Modelo: " />
-							<p:inputText id="busca-modelo"
-								value="#{gestaoCarrosBean.filtros.modelo}" label="Modelo" />
-						</p:column>
-
-						<p:column>
-							<p:outputLabel for="busca-anomodeloinicio"
-								value="Ano modelo de: " />
-							<p:inputMask id="busca-anomodeloinicio"
-								value="#{gestaoCarrosBean.filtros.anoModeloInicio}" mask="9999"
-								label="Modelo" />
-						</p:column>
-
-						<p:column>
-							<p:outputLabel for="busca-anomodelofim" value="Até: " />
-							<p:inputMask id="busca-anomodelofim"
-								value="#{gestaoCarrosBean.filtros.anoModeloFim}" mask="9999"
-								label="Modelo" />
+							<h:outputLabel for="busca-login" value="Login: " />
+							<p:inputText id="busca-login"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.login}" label="Login" />
 						</p:column>
 
 						<p:column>
 							<p:outputLabel for="busca-valorinicio" value="Valor de: " />
 							<p:inputNumber id="busca-valorinicio"
-								value="#{gestaoCarrosBean.filtros.valorInicio}" label="Modelo"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.valorInicio}" label="Modelo"
 								minValue="0" decimalPlaces="2" />
 						</p:column>
-
+						
 						<p:column>
 							<p:outputLabel for="busca-valorfim" value="Até: " />
 							<p:inputNumber id="busca-valorfim"
-								value="#{gestaoCarrosBean.filtros.valorFim}" label="Modelo"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.valorFim}" label="Modelo"
 								minValue="0" decimalPlaces="2" />
+						</p:column>
+						
+						<p:column>
+							<p:outputLabel for="busca-datareservainicio"
+								value="Data nascimento de: " />
+							<p:datePicker id="busca-datareservainicio"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataReservaInicio}" locale="br"
+								monthNavigator="true" yearNavigator="true" showIcon="true" />
 						</p:column>
 
 						<p:column>
-							<h:outputLabel for="busca-status" value="Status: " />
-							<p:selectOneMenu id="busca-status"
-								value="#{gestaoCarrosBean.filtros.status}">
-								<f:selectItem itemLabel="Selecionar Status" itemValue="" />
-								<f:selectItems value="#{gestaoCarrosBean.status}" var="status"
-									itemLabel="#{status.descricao}" itemValue="#{status}" />
-							</p:selectOneMenu>
+							<p:outputLabel for="busca-datareservafim"
+								value="Data nascimento até: " />
+							<p:datePicker id="busca-datareservafim"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataReservaFim}" locale="br"
+								monthNavigator="true" yearNavigator="true" showIcon="true" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="busca-dataliberacaoinicio"
+								value="Data nascimento de: " />
+							<p:datePicker id="busca-dataliberacaoinicio"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataLiberacaoInicio}" locale="br"
+								monthNavigator="true" yearNavigator="true" showIcon="true" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="busca-dataliberacaofim"
+								value="Data nascimento até: " />
+							<p:datePicker id="busca-dataliberacaofim"
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataLiberacaoFim}" locale="br"
+								monthNavigator="true" yearNavigator="true" showIcon="true" />
 						</p:column>
 					</p:row>
 
@@ -77,47 +78,37 @@
 							<p:column colspan="2">
 								<p:commandButton id="busca-button" title="Pesquisar"
 									value="Pesquisar" icon="pi pi-search" process="painelBusca"
-									actionListener="#{gestaoCarrosBean.pesquisar}"
-									update="carrosDataTable" />
+									actionListener="#{gestaoHistoricoReservaCarrosBean.pesquisar}"
+									update="historicoReservaCarroDataTable" />
 							</p:column>
 						</p:row>
 					</f:facet>
 				</p:panelGrid>
 			</p:panel>
+			
+			<p:spacer styleClass="espacoDois" />
 
-			<p:spacer height="20px" />
-
-			<p:dataTable id="carrosDataTable"
-				value="#{gestaoCarrosBean.listaCarros}" var="carro"
+			<p:dataTable id="historicoReservaCarroDataTable"
+				value="#{gestaoHistoricoReservaCarrosBean.listaHistoricoReserva}" var="historico"
 				emptyMessage="Nenhum registro encontrado." paginator="true"
-				rows="10" paginatorPosition="bottom" rowKey="#{carro.id}">
+				rows="10" paginatorPosition="bottom" rowKey="#{historico.id}">
 
-				<p:column headerText="Marca" sortBy="#{carro.marca}">
-					<h:outputText value="#{carro.marca}" />
-				</p:column>
-
-				<p:column headerText="Modelo" sortBy="#{carro.modelo}">
-					<h:outputText value="#{carro.modelo}" />
-				</p:column>
-
-				<p:column headerText="Valor" sortBy="#{carro.valor}">
-					<h:outputText value="#{carro.valor}" />
-				</p:column>
-
-				<p:column headerText="Descrição">
-					<h:outputText value="#{carro.descricao}" />
+				<p:column headerText="Login" sortBy="#{historico.login}">
+					<h:outputText value="#{historico.login}" />
 				</p:column>
 				
-				<p:column headerText="Status" sortBy="#{carro.status}">
-					<h:outputText value="#{carro.status}" />
+				<p:column headerText="Valor" sortBy="#{historico.valor}">
+					<h:outputText value="#{historico.valor}" />
 				</p:column>
 
-				<p:column id="Detalhe" name="Detalhe" styleClass="ui-column-custom">
-					<p:commandButton icon="pi pi-eye"
-						action="#{gestaoCarrosBean.detalhes(carro.id)}" title="Detalhe">
-					</p:commandButton>
-
+				<p:column headerText="Data Reserva" sortBy="#{historico.dataReserva}">
+					<h:outputText value="#{historico.dataReserva}" />
 				</p:column>
+
+				<p:column headerText="Data Liberação">
+					<h:outputText value="#{historico.dataLiberacao}" />
+				</p:column>
+
 			</p:dataTable>
 		</h:form>
 

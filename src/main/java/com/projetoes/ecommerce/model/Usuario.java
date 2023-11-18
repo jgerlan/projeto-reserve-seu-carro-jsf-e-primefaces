@@ -3,6 +3,7 @@ package com.projetoes.ecommerce.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -20,127 +21,124 @@ import javax.validation.constraints.Past;
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
-	
-		private static final long serialVersionUID = 1L;
-		
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private long id;
-		
-		@Column(unique = true, nullable = false, length = 20)
-		private String login;
-		
-		@Column(nullable = false, length = 15)
-		private String senha;
-		
-		@Column(nullable = false, length = 30)
-		private String nome;
-		
-		@NotNull
-		@Enumerated(EnumType.STRING)
-		@Column(nullable = false, length = 30)
-		private StatusUsuario status;
-		
-		@Past
-		@Temporal(TemporalType.DATE)
-		@Column(name = "data_nascimento")
-		private Date dataNasc;
-		
-		@NotNull
-		@Enumerated(EnumType.STRING)
-		@Column(nullable = false, length = 30)
-		private TipoUsuario tipo;
-		
-		@Embedded
-		DadosCadastroVo dadosCadastro;
 
-		public long getId() {
-			return id;
-		}
+	private static final long serialVersionUID = 1L;
 
-		public void setId(long id) {
-			this.id = id;
-		}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-		public String getLogin() {
-			return login;
-		}
+	@Column(unique = true, nullable = false, length = 20)
+	private String login;
 
-		public void setLogin(String login) {
-			this.login = login;
-		}
+	@Column(nullable = false, length = 15)
+	private String senha;
 
-		public String getSenha() {
-			return senha;
-		}
+	@Column(nullable = false, length = 30)
+	private String nome;
 
-		public void setSenha(String senha) {
-			this.senha = senha;
-		}
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
+	private StatusUsuario status;
 
-		public String getNome() {
-			return nome;
-		}
+	@Past
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_nascimento")
+	private Date dataNasc;
 
-		public void setNome(String nome) {
-			this.nome = nome;
-		}
-		
-		public StatusUsuario getStatus() {
-			return status;
-		}
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
+	private TipoUsuario tipo;
 
-		public void setStatus(StatusUsuario status) {
-			this.status = status;
-		}
+	@Embedded
+	DadosCadastroVo dadosCadastro;
 
-		public Date getDataNasc() {
-			return dataNasc;
-		}
+	public long getId() {
+		return id;
+	}
 
-		public void setDataNasc(Date dataNasc) {
-			this.dataNasc = dataNasc;
-		}
-		
-		public TipoUsuario getTipo() {
-			return tipo;
-		}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-		public void setTipo(TipoUsuario tipo) {
-			this.tipo = tipo;
-		}
+	public String getLogin() {
+		return login;
+	}
 
-		public DadosCadastroVo getDadosCadastro() {
-			return dadosCadastro;
-		}
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-		public void setDadosCadastro(DadosCadastroVo dadosCadastro) {
-			this.dadosCadastro = dadosCadastro;
-		}
+	public String getSenha() {
+		return senha;
+	}
 
-		@Override
-		public int hashCode() {
-			return Objects.hash(id);
-		}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Usuario other = (Usuario) obj;
-			return id == other.id;
-		}
+	public String getNome() {
+		return nome;
+	}
 
-		@Override
-		public String toString() {
-			return "Usuario i d= " + id;
-		}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public StatusUsuario getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusUsuario status) {
+		this.status = status;
+	}
+
+	public Date getDataNasc() {
+		return dataNasc;
+	}
+
+	public void setDataNasc(Date dataNasc) {
+		this.dataNasc = dataNasc;
+	}
+
+	public TipoUsuario getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoUsuario tipo) {
+		this.tipo = tipo;
+	}
+
+	public DadosCadastroVo getDadosCadastro() {
+		return dadosCadastro;
+	}
+
+	public void setDadosCadastro(DadosCadastroVo dadosCadastro) {
+		this.dadosCadastro = dadosCadastro;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario i d= " + id;
+	}
 
 }
-		
-
-

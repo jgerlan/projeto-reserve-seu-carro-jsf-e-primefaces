@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	template="WEB-INF/template/Layout.xhtml">
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="WEB-INF/template/Layout.xhtml">
 
-	<ui:define name="titulo">
-		Detalhes carro
-	</ui:define>
+    <ui:define name="titulo">Cadastro</ui:define>
 
-	<ui:define name="conteudo">
+    <ui:define name="conteudo">
+        <h:outputStylesheet library="projetoes" name="estilo-login.css" />
 
-	<title>Cadastro</title>
-		<h:outputStylesheet library="projetoes" name="estilo-login.css" />
+        <div class="corpo-formulario">
+            <div class="login-container">
+                <div class="signup-section">
+                    <h1>Cadastro</h1>
 
-	<div class= "corpo-formulario" >
-		<div class="login-container">
- 		<div class="signup-section">
-            <h1>Cadastro</h1>
-            
-           <h:messages styleClass="success-message" globalOnly="true" layout="table" />
-           
-            <form method="post" action="verificar-cadastro">
-              <div class="form-group">
-                <label for="signup-username">Nome de Usuário</label>
-                <input type="text" id="signup-username" name="signup-username" />
-              </div>
-              <div class="form-group">
-                <label for="dataNascimento"> Data de Nascimento:</label>
-				<input type="date" id="dataNascimento" name="dataNascimento" />
-              </div>
-              <div class="form-group">
-                <label for="signup-password">Senha</label>
-                <input type="password" id="signup-password" name="signup-password" />
-              </div>
-              <div class="form-group">
-                <label for="confirm-password">Confirmar Senha</label>
-                <input type="password" id="confirm-password" name="confirm-password" />
-              </div>
-           <h:commandButton value="Cadastrar" action="#{cadastroBean.cadastrar}" />
-           <h:messages styleClass="success-message" globalOnly="true" layout="table" />
-            
-            </form>
+                    <h:form>
+                        <h:messages styleClass="success-message" globalOnly="true" layout="table" />
 
+                        <div class="form-group">
+                            <label for="signup-username">Nome de Usuário</label>
+                            <h:inputText id="signup-username" value="#{cadastroBean.novoUsuario.nome}" required="true" />
+                            <h:message for="signup-username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="dataNascimento">Data de Nascimento:</label>
+                            <p:calendar id="dataNascimento" value="#{cadastroBean.novoUsuario.dataNasc}" pattern="dd/MM/yyyy" showOn="button" required="true" />
+                            <h:message for="dataNascimento" />
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Senha</label>
+                            <h:inputSecret id="signup-password" value="#{cadastroBean.novoUsuario.senha}" required="true" />
+                            <h:message for="signup-password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmar Senha</label>
+                            <h:inputSecret id="confirm-password" value="" required="true" />
+                            <h:message for="confirm-password" />
+                        </div>
+                        <h:commandButton value="Cadastrar" action="#{cadastroBean.cadastrar()}" />
+                    </h:form>
+                    <div class="additional-options">
+                        <h:link value="Voltar para o Login" outcome="login.xhtml?faces-redirect=true" />
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-	</div>
-	
-	</ui:define>
+    </ui:define>
 </ui:composition>

@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -6,20 +8,18 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="WEB-INF/template/Layout.xhtml">
 
-	<ui:define name="titulo">
-		<!-- Detalhes carro -->
-	</ui:define>
-
-	<ui:define name="conteudo">
+		<ui:define name="conteudo">
 		<h:outputStylesheet library="projetoes" name="estilo-login.css" />
 
-	<div class= "corpo-formulario" >
-		  <div class="recovery-container">
+    <title>Recuperação de Senha</title>
+
+    <div class="recovery-container">
         <div class="recovery-section">
             <h1>Recuperação de Senha</h1>
-            <form method="post" action="processar-recuperacao.xhtml">
+            <h:form>
                 <div class="form-group">
                     <label for="username">Nome de Usuário</label>
+<<<<<<< HEAD
                     <input type="text" id="login" name="username" />
                 </div>
                 <div class="form-group">
@@ -29,10 +29,22 @@
                  <h:commandButton value="Cadastrar" action="#{RecuperarSenhaBean.getSenha}" />
                 <!-- <button type="submit">Recuperar Senha</button> -->
             </form>
+=======
+                    <h:inputText id="username" value="#{recuperarSenhaBean.username}" required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="dataNascimento">Data de Nascimento</label>
+                    <!-- Utilizando p:calendar do PrimeFaces -->
+                    <p:calendar id="dataNascimento" value="#{recuperarSenhaBean.dataNascimento}" pattern="dd/MM/yyyy" showOn="button" required="true" />
+                </div>
+                <h:commandButton value="Recuperar Senha" action="#{recuperarSenhaBean.recuperarSenha}" />
+            </h:form>
+            <div class="additional-options">
+    			<h:link value="Voltar para o Login" outcome="login.xhtml?faces-redirect=true" />
+			</div>
+>>>>>>> 8daaa9bcacffd4daf00f0f05d1e5e1f5ca7ea41e
         </div>
     </div>
-    </div>
-			
 
-	</ui:define>
+</ui:define>
 </ui:composition>

@@ -21,6 +21,11 @@ public class CadastroCarroService implements Serializable {
 	}
 	
 	@Transacional
+	public void atualizar(Carro carro) {
+		carros.guardar(carro);
+	}
+	
+	@Transacional
 	public void excluir(long id) {
 		carros.remover(id);
 	}
