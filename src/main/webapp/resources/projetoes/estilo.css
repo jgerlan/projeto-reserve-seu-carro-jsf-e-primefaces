@@ -216,3 +216,7 @@ form .ui-inputfield{
     display: block;
 }
 
+.ui-toolbar button {
+	margin-left: 10px;
+}
+

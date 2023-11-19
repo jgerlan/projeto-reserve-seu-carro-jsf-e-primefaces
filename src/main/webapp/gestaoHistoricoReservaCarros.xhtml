@@ -16,6 +16,9 @@
 		</f:metadata>
 
 		<h:form id="frm-historico-reserva">
+			<p:messages id="messages" closable="true">
+				<p:autoUpdate />
+			</p:messages>
 			<p:panel id="painelBusca" header="Busca">
 				<p:panelGrid styleClass="panelgrid-label-input">
 					<p:row styleClass="panelgrid-row">
@@ -97,7 +100,10 @@
 
 			<p:toolbar id="toolbar-gestao-historico-reservas">
 				<f:facet name="right">
-
+					<p:commandButton value="PDF" styleClass="mr-2 mb-2 ui-button-outlined" process="@this" ajax="false" immediate="true">
+                    	<p:dataExporter type="pdf" target="historicoReservaCarroDataTable" fileName="histórico-reserva-usuário" pageOnly="true"/>
+                	</p:commandButton>
+					
 					<p:commandButton value="Exportar pdf por Usuário" icon="pi pi-fw pi-file-pdf"
 						actionListener="#{gestaoHistoricoReservaCarrosBean.prepararExportacao()}"
 						oncomplete="PF('exportarReservasDialogWidgetVar').show()"
@@ -159,7 +165,7 @@
 					<p:outputLabel value="Data Cadastro: "
 						for="exportarDialogDataCadastro" />
 					<p:datePicker id="exportarDialogDataCadastro" pattern="dd/MM/yyyy"
-						value="#{gestaoHistoricoReservaCarrosBean.usuario.dadosCadastro.dataCriacao}" locale="br"
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.dataNasc}" locale="br"
 						monthNavigator="true" yearNavigator="true" showIcon="true"
 						required="true" />
 				</h:panelGrid>

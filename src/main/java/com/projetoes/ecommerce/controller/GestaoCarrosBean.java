@@ -34,55 +34,55 @@ public class GestaoCarrosBean implements Serializable {
 
 	@Inject
 	private CarroDAO carros;
-	
+
 	@Inject
 	private UsuarioDAO usuarios;
-	
+
 	@Inject
 	private HistoricoReservaCarroDAO historicoReservaCarros;
-	
+
 	@Inject
 	private CadastroHistoricoReservaCarrosService historicosReservaCarrosService;
-	
+
 	@Inject
 	private CadastroCarroService cadastroCarroService;
-	
+
 	@Inject
 	private FacesMessages messages;
 
 	private Carro carro;
-	
+
 	private StatusCarro verificaStatusCarro;
-	
+
 	private Usuario usuario;
 
 	private List<Carro> listaCarros;
 
 	private FiltroListarCarros filtros;
-	
+
 	public void index() {
 		this.carro = new Carro();
 		filtros = new FiltroListarCarros();
 		filtros.setStatus(StatusCarro.Livre);
 		listaCarros = carros.listarPorFiltros(filtros);
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-        Flash flash = facesContext.getExternalContext().getFlash();
+		Flash flash = facesContext.getExternalContext().getFlash();
 
-        // Retrieve the message from the Flash scope
-        String successMessage = (String) flash.get("successMessage");
+		// Retrieve the message from the Flash scope
+		String successMessage = (String) flash.get("successMessage");
 
-        if (successMessage != null) {
-        	messages.info(successMessage);
-        }
+		if (successMessage != null) {
+			messages.info(successMessage);
+		}
 	}
-	
+
 	public String detalhes(Long id) {
 		this.carro = carros.porId(id);
 		this.usuario = new Usuario();
 		return "detalheCarro?faces-redirect=true";
 	}
-	
+
 	public String home() {
 		return "home?faces-redirect=true";
 	}
@@ -96,7 +96,7 @@ public class GestaoCarrosBean implements Serializable {
 		filtros = new FiltroListarCarros();
 		listaCarros = carros.listarPorFiltros(filtros);
 	}
-	
+
 	public void prepararNovoCarro() {
 		carro = new Carro();
 	}
@@ -110,7 +110,7 @@ public class GestaoCarrosBean implements Serializable {
 			dadosCadastroVo.setUsuarioIdAtualizacao(1);
 			dadosCadastroVo.setDataCriacao(new Date());
 			dadosCadastroVo.setDataAtualizacao(new Date());
-			
+
 			carro.setStatus(StatusCarro.Livre);
 			carro.setDadosCadastro(dadosCadastroVo);
 
@@ -122,8 +122,7 @@ public class GestaoCarrosBean implements Serializable {
 			PrimeFaces.current().ajax().addCallbackParam("carroSalvo", carroSalvo);
 			messages.info("Carro salvo com sucesso!");
 
-			PrimeFaces.current().ajax()
-					.update(Arrays.asList("frm-carros:carrosDataTable", "frm-carros:messages"));
+			PrimeFaces.current().ajax().update(Arrays.asList("frm-carros:carrosDataTable", "frm-carros:messages"));
 
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("carroSalvo", carroSalvo);
@@ -148,30 +147,29 @@ public class GestaoCarrosBean implements Serializable {
 			PrimeFaces.current().ajax().addCallbackParam("carroAtualizado", carroAtualizado);
 			messages.info("Carro atualizado com sucesso!");
 
-			PrimeFaces.current().ajax()
-					.update(Arrays.asList("frm-carros:carrosDataTable", "frm-carros:messages"));
+			PrimeFaces.current().ajax().update(Arrays.asList("frm-carros:carrosDataTable", "frm-carros:messages"));
 
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("carroAtualizado", carroAtualizado);
 			messages.erro("Erro ao atualizar carro!");
 		}
 	}
-	
+
 	public void excluir(Long id) {
 		cadastroCarroService.excluir(id);
-        
-        carro = null;
-        
-        atualizarRegistros();
-        
-        messages.info("Carro excluído com sucesso!");
-    }
+
+		carro = null;
+
+		atualizarRegistros();
+
+		messages.info("Carro excluído com sucesso!");
+	}
 
 	public void prepararEdicao(Long id) {
 		carro = new Carro();
 		this.carro = carros.porId(id);
 	}
-	
+
 	private void atualizarRegistros() {
 		if (filtroVazio()) {
 			pesquisar();
@@ -181,91 +179,91 @@ public class GestaoCarrosBean implements Serializable {
 	}
 
 	private boolean filtroVazio() {
-		return this.filtros.getMarca() != null && !"".equals(this.filtros.getMarca()) && this.filtros.getModelo() != null
-				&& !"".equals(this.filtros.getModelo()) && this.filtros.getStatus() != null
-				&& this.filtros.getValorFim() != 0 && this.filtros.getValorInicio() != 0
-				&& this.filtros.getAnoFabricacaoInicio() != null
-				&& this.filtros.getAnoFabricacaoFim() != null && this.filtros.getAnoModeloInicio() != null
-				&& this.filtros.getAnoModeloInicio() != null;
+		return this.filtros.getMarca() != null || !"".equals(this.filtros.getMarca())
+				|| this.filtros.getModelo() != null || !"".equals(this.filtros.getModelo())
+				|| this.filtros.getStatus() != null || this.filtros.getValorFim() != 0
+				|| this.filtros.getValorInicio() != 0 || this.filtros.getAnoFabricacaoInicio() != null
+				|| this.filtros.getAnoFabricacaoFim() != null || this.filtros.getAnoModeloInicio() != null
+				|| this.filtros.getAnoModeloInicio() != null;
 	}
-	
+
 	public void reservarCarro() {
 		usuario.setTelefone(usuario.getTelefone().replaceAll("\\D", ""));
 		Usuario usuarioReserva = usuarios.buscarPorNomeETelefone(usuario.getNome(), usuario.getTelefone());
-		
-		if(usuarioReserva == null) {
+
+		if (usuarioReserva == null) {
 			messages.erro("Usuario não encontrado!");
 			this.usuario = new Usuario();
 			return;
 		}
-		
-        try {
-        	carro.setStatus(StatusCarro.Reservado);
-        	DadosCadastroVo dadosCadastroVo = carro.getDadosCadastro();
+
+		try {
+			carro.setStatus(StatusCarro.Reservado);
+			DadosCadastroVo dadosCadastroVo = carro.getDadosCadastro();
 			dadosCadastroVo.setUsuarioIdAtualizacao(1);
 			dadosCadastroVo.setDataAtualizacao(new Date());
 			carro.setDadosCadastro(dadosCadastroVo);
 
-        	HistoricoReservaCarro historicoReservaCarro = new HistoricoReservaCarro();
-        	historicoReservaCarro.setUsuario(usuarioReserva);
-        	historicoReservaCarro.setCarro(this.carro);
-        	historicoReservaCarro.setDataReserva(new Date());
-        	historicoReservaCarro.setLogin(usuarioReserva.getLogin());
-        	historicoReservaCarro.setTelefone(usuarioReserva.getTelefone());
-        	historicoReservaCarro.setValor(this.carro.getValor());
-    		
-    		historicosReservaCarrosService.salvar(historicoReservaCarro, this.carro);
-    		
-    		FacesContext facesContext = FacesContext.getCurrentInstance();
-            Flash flash = facesContext.getExternalContext().getFlash();
+			HistoricoReservaCarro historicoReservaCarro = new HistoricoReservaCarro();
+			historicoReservaCarro.setUsuario(usuarioReserva);
+			historicoReservaCarro.setCarro(this.carro);
+			historicoReservaCarro.setDataReserva(new Date());
+			historicoReservaCarro.setLogin(usuarioReserva.getLogin());
+			historicoReservaCarro.setTelefone(usuarioReserva.getTelefone());
+			historicoReservaCarro.setValor(this.carro.getValor());
 
-            flash.put("successMessage", "Carro reservado com sucesso!");
-            
-            String redirectURL = facesContext.getExternalContext().getRequestContextPath() + "/home.xhtml";
-            
-        	facesContext.getExternalContext().redirect(redirectURL);
-        } catch (Exception e) {
-        	messages.erro("Erro ao reservar carro!");
-        	this.usuario = new Usuario();
-        	this.carro = new Carro();
-            e.printStackTrace();
-        }
+			historicosReservaCarrosService.salvar(historicoReservaCarro, this.carro);
+
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			Flash flash = facesContext.getExternalContext().getFlash();
+
+			flash.put("successMessage", "Carro reservado com sucesso!");
+
+			String redirectURL = facesContext.getExternalContext().getRequestContextPath() + "/home.xhtml";
+
+			facesContext.getExternalContext().redirect(redirectURL);
+		} catch (Exception e) {
+			messages.erro("Erro ao reservar carro!");
+			this.usuario = new Usuario();
+			this.carro = new Carro();
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void liberarCarro(Long id) {
 		try {
-			
+
 			Carro carroLiberar = carros.porId(id);
-			
-			if(carroLiberar == null)
+
+			if (carroLiberar == null)
 				throw new Exception();
-			
-			HistoricoReservaCarro historico = historicoReservaCarros.buscarPorIdCarroEDataLiberacao(carroLiberar.getId(), null);
-			
-			if(historico == null)
+
+			HistoricoReservaCarro historico = historicoReservaCarros
+					.buscarPorIdCarroEDataLiberacao(carroLiberar.getId(), null);
+
+			if (historico == null)
 				throw new Exception();
-			
+
 			DadosCadastroVo dadosCadastroVo = carroLiberar.getDadosCadastro();
 			dadosCadastroVo.setUsuarioIdAtualizacao(1);
 			dadosCadastroVo.setDataAtualizacao(new Date());
-			
+
 			carroLiberar.setStatus(StatusCarro.Livre);
 			carroLiberar.setDadosCadastro(dadosCadastroVo);
 			historico.setDataLiberacao(new Date());
-			
+
 			historicosReservaCarrosService.atualizar(historico, carroLiberar);
-			
+
 			atualizarRegistros();
-			
+
 			messages.info("Carro liberado com sucesso!");
 
-			PrimeFaces.current().ajax()
-					.update(Arrays.asList("frm-carros:carrosDataTable", "frm-carros:messages"));
-			
+			PrimeFaces.current().ajax().update(Arrays.asList("frm-carros:carrosDataTable", "frm-carros:messages"));
+
 		} catch (Exception e) {
 			messages.erro("Erro ao liberar carro!");
 			this.carro = new Carro();
-            e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -292,10 +290,10 @@ public class GestaoCarrosBean implements Serializable {
 	public void setListaCarros(List<Carro> listaCarros) {
 		this.listaCarros = listaCarros;
 	}
-	
+
 	public StatusCarro[] getStatus() {
-        return StatusCarro.values();
-    }
+		return StatusCarro.values();
+	}
 
 	public Usuario getUsuario() {
 		return usuario;

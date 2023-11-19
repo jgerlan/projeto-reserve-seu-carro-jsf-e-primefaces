@@ -156,10 +156,10 @@ public class GestaoUsuariosBean implements Serializable {
 	}
 
 	private boolean filtroVazio() {
-		return this.filtros.getLogin() != null && !"".equals(this.filtros.getLogin()) && this.filtros.getNome() != null
-				&& !"".equals(this.filtros.getNome()) && this.filtros.getStatus() != null
-				&& this.filtros.getTipo() != null && this.filtros.getDeDataNasc() != null
-				&& this.filtros.getAteDataNasc() != null;
+		return this.filtros.getLogin() != null || !"".equals(this.filtros.getLogin()) || this.filtros.getNome() != null
+				|| !"".equals(this.filtros.getNome()) || this.filtros.getStatus() != null
+				|| this.filtros.getTipo() != null || this.filtros.getDeDataNasc() != null
+				|| this.filtros.getAteDataNasc() != null;
 	}
 	
 	public String getFormattedTelefone(String telefone) {

@@ -1,5 +1,6 @@
 package com.projetoes.ecommerce.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.projetoes.ecommerce.model.DadosCadastroVo;
 import com.projetoes.ecommerce.model.FiltroListarHistoricoReservaCarros;
 import com.projetoes.ecommerce.model.HistoricoReservaCarro;
 import com.projetoes.ecommerce.model.Usuario;
@@ -70,10 +72,7 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 	public void prepararExportacao() {
 		this.historicoReservaCarro = new HistoricoReservaCarro();
 		this.usuario = new Usuario();
-	}
-	
-	public void exportarPorUsuario() {
-		
+		this.usuario.setDadosCadastro(new DadosCadastroVo());
 	}
 	
 	public String getFormattedTelefone(String telefone) {
@@ -91,6 +90,22 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
         return "";
     }
 	
+	public void exportarPorUsuario() {
+	    try {
+	    	this.download();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void download() throws IOException {
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+		
 	public Usuario getUsuario() {
 		return usuario;
 	}
