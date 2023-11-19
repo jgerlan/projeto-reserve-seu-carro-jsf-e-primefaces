@@ -28,12 +28,16 @@ public class CadastroHistoricoReservaCarrosService implements Serializable {
 		} catch (Exception e) {
 			throw e;
 		}
-		
 	}
 	
 	@Transacional
-	public void atualizar(HistoricoReservaCarro historico) {
-		historicoReservaCarros.guardar(historico);
+	public void atualizar(HistoricoReservaCarro historico, Carro carro) {
+		try {
+			carros.guardar(carro);
+			historicoReservaCarros.guardar(historico);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@Transacional
