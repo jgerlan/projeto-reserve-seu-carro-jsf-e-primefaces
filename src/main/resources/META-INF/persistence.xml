@@ -12,15 +12,15 @@
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" /> -->
 
-			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/projetoes" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/projetoes" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
-			<property name="javax.persistence.jdbc.password" value="" />
-			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> -->
+			<property name="javax.persistence.jdbc.password" value="enigm@" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			
-			<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:projetoes;DB_CLOSE_DELAY=-1" />
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:projetoes;DB_CLOSE_DELAY=-1" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="" />
-			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" /> -->
 			
 			<!-- Remover quando em produção -->
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
@@ -32,8 +32,8 @@
         	<!-- <property name="hibernate.hbm2ddl.auto" value="update"/> -->
       		
 			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySqlInnoDBDialect"/> -->
-      		<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> -->
-      		<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+      		<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      		<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> -->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>

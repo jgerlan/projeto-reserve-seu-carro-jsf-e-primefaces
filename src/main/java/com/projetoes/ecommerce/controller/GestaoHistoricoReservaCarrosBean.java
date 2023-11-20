@@ -1,16 +1,31 @@
 package com.projetoes.ecommerce.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import com.projetoes.ecommerce.model.DadosCadastroVo;
 import com.projetoes.ecommerce.model.FiltroListarHistoricoReservaCarros;
 import com.projetoes.ecommerce.model.HistoricoReservaCarro;
@@ -98,11 +113,37 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 		}
 	}
 
-	public void download() throws IOException {
+	public StreamedContent download() throws IOException {
 		try {
 			
+	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+	        
+	        //Criar pdf
+	        PdfPTable table = null;
+	        
+	        Document document = new Document(PageSize.A4);
+	        PdfWriter.getInstance(document, byteArrayOutputStream);
+	        
+	        document.open();
+	        Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+	        fontTitle.setSize(18);
+	        
+	        Paragraph paragraph = new Paragraph("Histórico reserva por Usuário", fontTitle);
+	        paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+	        document.add(paragraph);
+	        
+	        document.close();
+	        
+	        //Enviar pro front
+	        StreamedContent file = DefaultStreamedContent.builder()
+	                .name("historico.pdf")
+	                .contentType("application/pdf")
+	                .stream(() -> new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))
+	                .build();
+	        return file;
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			return null;
 		}
 	}
 		

@@ -12,7 +12,8 @@
 
 	<ui:define name="conteudo">
 		<f:metadata>
-			<f:viewAction action="#{gestaoHistoricoReservaCarrosBean.todosHistoricos}" />
+			<f:viewAction
+				action="#{gestaoHistoricoReservaCarrosBean.todosHistoricos}" />
 		</f:metadata>
 
 		<h:form id="frm-historico-reserva">
@@ -25,9 +26,10 @@
 						<p:column>
 							<h:outputLabel for="busca-login" value="Login: " />
 							<p:inputText id="busca-login"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.login}" label="Login" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.login}"
+								label="Login" />
 						</p:column>
-						
+
 						<p:column>
 							<p:outputLabel for="busca-telefone" value="Telefone: " />
 							<p:inputMask id="busca-telefone"
@@ -38,47 +40,51 @@
 						<p:column>
 							<p:outputLabel for="busca-valorinicio" value="Valor de: " />
 							<p:inputNumber id="busca-valorinicio"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.valorInicio}" label="Modelo"
-								minValue="0" decimalPlaces="2" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.valorInicio}"
+								label="Modelo" minValue="0" decimalPlaces="2" />
 						</p:column>
-						
+
 						<p:column>
 							<p:outputLabel for="busca-valorfim" value="Até: " />
 							<p:inputNumber id="busca-valorfim"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.valorFim}" label="Modelo"
-								minValue="0" decimalPlaces="2" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.valorFim}"
+								label="Modelo" minValue="0" decimalPlaces="2" />
 						</p:column>
-						
+
 						<p:column>
 							<p:outputLabel for="busca-datareservainicio"
 								value="Data nascimento de: " />
 							<p:datePicker id="busca-datareservainicio"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataReservaInicio}" locale="br"
-								monthNavigator="true" yearNavigator="true" showIcon="true" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataReservaInicio}"
+								locale="br" monthNavigator="true" yearNavigator="true"
+								showIcon="true" />
 						</p:column>
 
 						<p:column>
 							<p:outputLabel for="busca-datareservafim"
 								value="Data nascimento até: " />
 							<p:datePicker id="busca-datareservafim"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataReservaFim}" locale="br"
-								monthNavigator="true" yearNavigator="true" showIcon="true" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataReservaFim}"
+								locale="br" monthNavigator="true" yearNavigator="true"
+								showIcon="true" />
 						</p:column>
 
 						<p:column>
 							<p:outputLabel for="busca-dataliberacaoinicio"
 								value="Data nascimento de: " />
 							<p:datePicker id="busca-dataliberacaoinicio"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataLiberacaoInicio}" locale="br"
-								monthNavigator="true" yearNavigator="true" showIcon="true" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataLiberacaoInicio}"
+								locale="br" monthNavigator="true" yearNavigator="true"
+								showIcon="true" />
 						</p:column>
 
 						<p:column>
 							<p:outputLabel for="busca-dataliberacaofim"
 								value="Data nascimento até: " />
 							<p:datePicker id="busca-dataliberacaofim"
-								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataLiberacaoFim}" locale="br"
-								monthNavigator="true" yearNavigator="true" showIcon="true" />
+								value="#{gestaoHistoricoReservaCarrosBean.filtros.dataLiberacaoFim}"
+								locale="br" monthNavigator="true" yearNavigator="true"
+								showIcon="true" />
 						</p:column>
 					</p:row>
 
@@ -95,19 +101,29 @@
 					</f:facet>
 				</p:panelGrid>
 			</p:panel>
-			
+
 			<p:spacer styleClass="espacoUm" />
 
 			<p:toolbar id="toolbar-gestao-historico-reservas">
 				<f:facet name="right">
-					<p:commandButton value="PDF" styleClass="mr-2 mb-2 ui-button-outlined" process="@this" ajax="false" immediate="true">
-                    	<p:dataExporter type="pdf" target="historicoReservaCarroDataTable" fileName="histórico-reserva-usuário" pageOnly="true"/>
-                	</p:commandButton>
-					
-					<p:commandButton value="Exportar pdf por Usuário" icon="pi pi-fw pi-file-pdf"
+					<p:commandButton value="Exportar PDF por listagem"
+						styleClass="mr-2 mb-2 ui-button-outlined" process="@this"
+						ajax="false" immediate="true">
+						<p:dataExporter type="pdf" target="historicoReservaCarroDataTable"
+							fileName="histórico-reserva-usuário" pageOnly="true" />
+					</p:commandButton>
+
+					<p:commandButton value="Download File Teste" process="@this">
+						<p:fileDownload
+							value="#{gestaoHistoricoReservaCarrosBean.download()}" />
+					</p:commandButton>
+
+					<p:commandButton value="Exportar PDF por Usuário"
+						icon="pi pi-fw pi-file-pdf"
 						actionListener="#{gestaoHistoricoReservaCarrosBean.prepararExportacao()}"
 						oncomplete="PF('exportarReservasDialogWidgetVar').show()"
-						update=":frm-historico-reserva:exportarReservasDialog" process="@this">
+						update=":frm-historico-reserva:exportarReservasDialog"
+						process="@this">
 						<p:resetInput target="exportarReservasDialog" />
 					</p:commandButton>
 
@@ -117,61 +133,68 @@
 			<p:spacer styleClass="espacoUm" />
 
 			<p:dataTable id="historicoReservaCarroDataTable"
-				value="#{gestaoHistoricoReservaCarrosBean.listaHistoricoReserva}" var="historico"
-				emptyMessage="Nenhum registro encontrado." paginator="true"
-				rows="10" paginatorPosition="bottom" rowKey="#{historico.id}">
+				value="#{gestaoHistoricoReservaCarrosBean.listaHistoricoReserva}"
+				var="historico" emptyMessage="Nenhum registro encontrado."
+				paginator="true" rows="10" paginatorPosition="bottom"
+				rowKey="#{historico.id}">
 
 				<p:column headerText="Login" sortBy="#{historico.login}">
 					<h:outputText value="#{historico.login}" />
 				</p:column>
-				
+
 				<p:column headerText="Telefone" sortBy="#{historico.telefone}">
-					<h:outputText value="#{gestaoHistoricoReservaCarrosBean.getFormattedTelefone(historico.telefone)}" />
+					<h:outputText
+						value="#{gestaoHistoricoReservaCarrosBean.getFormattedTelefone(historico.telefone)}" />
 				</p:column>
-				
+
 				<p:column headerText="Valor" sortBy="#{historico.valor}">
-					<h:outputText value="#{historico.valor}" >
-					    <f:convertNumber type="currency" currencySymbol="R$" />
+					<h:outputText value="#{historico.valor}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Data e Hora Reserva" sortBy="#{historico.dataReserva}">
-					<h:outputText value="#{historico.dataReserva}" >
-					    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+				<p:column headerText="Data e Hora Reserva"
+					sortBy="#{historico.dataReserva}">
+					<h:outputText value="#{historico.dataReserva}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Data e Hora Liberação" sortBy="#{historico.dataLiberacao}">
-					<h:outputText value="#{historico.dataLiberacao}" >
-					    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+				<p:column headerText="Data e Hora Liberação"
+					sortBy="#{historico.dataLiberacao}">
+					<h:outputText value="#{historico.dataLiberacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:column>
 
 			</p:dataTable>
-			
-			<p:dialog id="exportarReservasDialog" widgetVar="exportarReservasDialogWidgetVar" styleClass="inputsPart"
-				header="Confirmar dados Usuário" modal="true" showEffect="fade" draggable="false"
-				hideEffect="fade">
+
+			<p:dialog id="exportarReservasDialog"
+				widgetVar="exportarReservasDialogWidgetVar" styleClass="inputsPart"
+				header="Confirmar dados Usuário" modal="true" showEffect="fade"
+				draggable="false" hideEffect="fade">
 				<h:panelGrid id="confirmatioExportarReservasPanelGrid" columns="2">
 
 					<p:outputLabel value="Nome: " for="exportarDialogNome" />
 					<p:inputText id="exportarDialogNome" size="80" maxlength="100"
-						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}" required="true" />
-						
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}"
+						required="true" />
+
 					<p:outputLabel value="Telefone: " for="exportarDialogTelefone" />
 					<p:inputText id="exportarDialogTelefone" size="80" maxlength="100"
-						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}" required="true" />
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}"
+						required="true" />
 
 					<p:outputLabel value="Data Cadastro: "
 						for="exportarDialogDataCadastro" />
 					<p:datePicker id="exportarDialogDataCadastro" pattern="dd/MM/yyyy"
-						value="#{gestaoHistoricoReservaCarrosBean.usuario.dataNasc}" locale="br"
-						monthNavigator="true" yearNavigator="true" showIcon="true"
-						required="true" />
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.dataNasc}"
+						locale="br" monthNavigator="true" yearNavigator="true"
+						showIcon="true" required="true" />
 				</h:panelGrid>
 
-				<p:commandButton id="exportaReservaCommandButton" value="Exportar PDF"
-					styleClass="commandButtonUsuario"
+				<p:commandButton id="exportaReservaCommandButton"
+					value="Exportar PDF" styleClass="commandButtonUsuario"
 					actionListener="#{gestaoHistoricoReservaCarrosBean.exportarPorUsuario()}"
 					oncomplete="PF('exportarReservasDialogWidgetVar').hide()"
 					update="exportarReservasDialog" process="exportarReservasDialog" />
