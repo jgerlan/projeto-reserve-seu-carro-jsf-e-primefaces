@@ -1,5 +1,6 @@
 package com.projetoes.ecommerce.respository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,10 +14,14 @@ import javax.persistence.criteria.Root;
 
 import com.projetoes.ecommerce.model.FiltroListarUsuarios;
 import com.projetoes.ecommerce.model.Usuario;
+import com.projetoes.ecommerce.util.DateTimeExtensions;
 
 public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private DateTimeExtensions dtExtensions;
 
 	@Inject
 	public UsuarioDAO(EntityManager entityManager) {
@@ -41,6 +46,35 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 				criteriaBuilder.like(criteriaBuilder.lower(usuarioRoot.get("nome")), "%" + nome.toLowerCase() + "%"));
 
 		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(usuarioRoot.get("telefone"), telefone));
+
+		criteriaQuery.where(predicate);
+
+		try {
+			return getEntityManager().createQuery(criteriaQuery).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public Usuario buscarPorNomeTelefoneDataCadastro(String nome, String telefone, Date dataCadastro) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
+		Root<Usuario> entityRoot = criteriaQuery.from(Usuario.class);
+
+		Predicate predicate = criteriaBuilder.conjunction();
+
+		predicate = criteriaBuilder.and(predicate,
+				criteriaBuilder.like(criteriaBuilder.lower(entityRoot.get("nome")), "%" + nome.toLowerCase() + "%"));
+
+		String telefoneAux = telefone.replaceAll("\\D", "");
+		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(entityRoot.get("telefone"), telefoneAux));
+		
+		Date truncatedDataCadastro = dtExtensions.truncateToDay(dataCadastro);
+		
+		predicate = criteriaBuilder.and(predicate,
+	            criteriaBuilder.greaterThanOrEqualTo(entityRoot.get("dadosCadastro").get("dataCriacao"), truncatedDataCadastro),
+	            criteriaBuilder.lessThan(entityRoot.get("dadosCadastro").get("dataCriacao"),
+	            		dtExtensions.addDays(truncatedDataCadastro, 1)));
 
 		criteriaQuery.where(predicate);
 
@@ -97,7 +131,7 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 
 		return getEntityManager().createQuery(criteriaQuery).getResultList();
 	}
-
+	
 	// métodos adicionados:
 
 	public boolean existeNomeUsuario(String nomeUsuario) {

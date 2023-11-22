@@ -35,6 +35,6 @@ INSERT INTO carro (marca, modelo, ano_fabricacao, ano_modelo, valor, descricao, 
 INSERT INTO carro (marca, modelo, ano_fabricacao, ano_modelo, valor, descricao, status, usuarioid_criacao, data_criacao, usuarioid_atualizacao, data_atualizacao) VALUES ('Batmobile', 'Tumbler', '2005-06-15', '2005-06-15', 100.00, 'Carro do Batman', 'Livre', 1, CURRENT_DATE, 1, CURRENT_DATE);
 INSERT INTO carro (marca, modelo, ano_fabricacao, ano_modelo, valor, descricao, status, usuarioid_criacao, data_criacao, usuarioid_atualizacao, data_atualizacao) VALUES ('Ecto-1', 'Ambulance', '1959-11-13', '1959-11-13', 350.00, 'Veículo dos Caça-Fantasmas', 'Livre', 1, CURRENT_DATE, 1, CURRENT_DATE);
 
-INSERT INTO historico_reserva_carros(usuario_id, carro_id, login, telefone, valor, data_reserva, data_liberacao) VALUES (3, 1, 'cliente01@gmail.com', '85999849056', 130.00, CURRENT_DATE, null);
-INSERT INTO historico_reserva_carros(usuario_id, carro_id, login, telefone, valor, data_reserva, data_liberacao) VALUES (3, 2, 'cliente01@gmail.com', '85999849056', 105.00, CURRENT_DATE, CURRENT_DATE);
-INSERT INTO historico_reserva_carros(usuario_id, carro_id, login, telefone, valor, data_reserva, data_liberacao) VALUES (4, 3, 'cliente02@gmail.com', '85999658475', 900.00, CURRENT_DATE, null);
+INSERT INTO historico_reserva_carros(usuario_id, carro_id, data_reserva, data_liberacao) VALUES (3, 1, CURRENT_DATE, null);
+INSERT INTO historico_reserva_carros(usuario_id, carro_id, data_reserva, data_liberacao) VALUES (3, 2, CURRENT_DATE, CURRENT_DATE);
+INSERT INTO historico_reserva_carros(usuario_id, carro_id, data_reserva, data_liberacao) VALUES (4, 3, CURRENT_DATE, null);

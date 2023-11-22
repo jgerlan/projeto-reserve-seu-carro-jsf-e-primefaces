@@ -4,34 +4,27 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 import com.projetoes.ecommerce.model.DadosCadastroVo;
 import com.projetoes.ecommerce.model.FiltroListarHistoricoReservaCarros;
 import com.projetoes.ecommerce.model.HistoricoReservaCarro;
 import com.projetoes.ecommerce.model.Usuario;
 import com.projetoes.ecommerce.respository.HistoricoReservaCarroDAO;
+import com.projetoes.ecommerce.service.HistoricoReservaCarrosService;
 import com.projetoes.ecommerce.util.FacesMessages;
+import com.projetoes.ecommerce.util.StringExtensions;
 
 @Named
 @SessionScoped
@@ -41,6 +34,12 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 
 	@Inject
 	private HistoricoReservaCarroDAO historicosReservaCarros;
+	
+	@Inject
+	private HistoricoReservaCarrosService historicoReservaCarrosService;
+	
+	@Inject
+	private StringExtensions stringExtensions;
 
 	@Inject
 	private FacesMessages messages;
@@ -90,50 +89,23 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 		this.usuario.setDadosCadastro(new DadosCadastroVo());
 	}
 	
-	public String getFormattedTelefone(String telefone) {
-        if (!telefone.isEmpty()) {
-            // Remove non-digit characters
-            String cleaned = telefone.replaceAll("\\D", "");
-
-            // Apply the custom phone number format (99) 9 9999-9999
-            return MessageFormat.format("({0}) {1} {2}-{3}",
-                    cleaned.substring(0, 2),
-                    cleaned.substring(2, 3),
-                    cleaned.substring(3, 7),
-                    cleaned.substring(7));
-        }
-        return "";
-    }
-	
-	public void exportarPorUsuario() {
-	    try {
-	    	this.download();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public StreamedContent download() throws IOException {
+	public StreamedContent exportarPorUsuario() throws IOException {
 		try {
 			
+			List<HistoricoReservaCarro> historico = 
+					historicosReservaCarros.buscarPorNomeTelefoneDataCadastro(
+							this.usuario.getNome(), this.usuario.getTelefone(), this.usuario.getDadosCadastro().getDataCriacao());
+			
+			if(historico == null || historico.isEmpty()) {
+				messages.erro("Não foram encontrados históricos para esse usuário!");
+				PrimeFaces.current().ajax()
+				.update(Arrays.asList("frm-historico-reserva:messages"));
+				return null;
+			}
+			
 	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-	        
-	        //Criar pdf
-	        PdfPTable table = null;
-	        
-	        Document document = new Document(PageSize.A4);
-	        PdfWriter.getInstance(document, byteArrayOutputStream);
-	        
-	        document.open();
-	        Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-	        fontTitle.setSize(18);
-	        
-	        Paragraph paragraph = new Paragraph("Histórico reserva por Usuário", fontTitle);
-	        paragraph.setAlignment(Paragraph.ALIGN_CENTER);
-	        document.add(paragraph);
-	        
-	        document.close();
-	        
+	        historicoReservaCarrosService.criarPDFPorListaHistoricoReservaCarro(historico, byteArrayOutputStream);
+			
 	        //Enviar pro front
 	        StreamedContent file = DefaultStreamedContent.builder()
 	                .name("historico.pdf")
@@ -143,8 +115,9 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 	        return file;
 			
 		} catch (Exception e) {
-			return null;
+			e.printStackTrace();
 		}
+		return null;
 	}
 		
 	public Usuario getUsuario() {
@@ -185,6 +158,14 @@ public class GestaoHistoricoReservaCarrosBean implements Serializable {
 
 	public void setFiltros(FiltroListarHistoricoReservaCarros filtros) {
 		this.filtros = filtros;
+	}
+
+	public StringExtensions getStringExtensions() {
+		return stringExtensions;
+	}
+
+	public void setStringExtensions(StringExtensions stringExtensions) {
+		this.stringExtensions = stringExtensions;
 	}
 	
 }

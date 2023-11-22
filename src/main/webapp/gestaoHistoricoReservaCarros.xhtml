@@ -107,17 +107,13 @@
 			<p:toolbar id="toolbar-gestao-historico-reservas">
 				<f:facet name="right">
 					<p:commandButton value="Exportar PDF por listagem"
+						icon="pi pi-fw pi-file-pdf"
 						styleClass="mr-2 mb-2 ui-button-outlined" process="@this"
 						ajax="false" immediate="true">
 						<p:dataExporter type="pdf" target="historicoReservaCarroDataTable"
 							fileName="histórico-reserva-usuário" pageOnly="true" />
 					</p:commandButton>
-
-					<p:commandButton value="Download File Teste" process="@this">
-						<p:fileDownload
-							value="#{gestaoHistoricoReservaCarrosBean.download()}" />
-					</p:commandButton>
-
+					
 					<p:commandButton value="Exportar PDF por Usuário"
 						icon="pi pi-fw pi-file-pdf"
 						actionListener="#{gestaoHistoricoReservaCarrosBean.prepararExportacao()}"
@@ -138,17 +134,17 @@
 				paginator="true" rows="10" paginatorPosition="bottom"
 				rowKey="#{historico.id}">
 
-				<p:column headerText="Login" sortBy="#{historico.login}">
-					<h:outputText value="#{historico.login}" />
+				<p:column headerText="Login" sortBy="#{historico.usuario.login}">
+					<h:outputText value="#{historico.usuario.login}" />
 				</p:column>
 
-				<p:column headerText="Telefone" sortBy="#{historico.telefone}">
+				<p:column headerText="Telefone" sortBy="#{historico.usuario.telefone}">
 					<h:outputText
-						value="#{gestaoHistoricoReservaCarrosBean.getFormattedTelefone(historico.telefone)}" />
+						value="#{gestaoHistoricoReservaCarrosBean.stringExtensions.getFormattedTelefone(historico.usuario.telefone)}" />
 				</p:column>
 
-				<p:column headerText="Valor" sortBy="#{historico.valor}">
-					<h:outputText value="#{historico.valor}">
+				<p:column headerText="Valor" sortBy="#{historico.carro.valor}">
+					<h:outputText value="#{historico.carro.valor}">
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 				</p:column>
@@ -173,6 +169,9 @@
 				widgetVar="exportarReservasDialogWidgetVar" styleClass="inputsPart"
 				header="Confirmar dados Usuário" modal="true" showEffect="fade"
 				draggable="false" hideEffect="fade">
+				<p:messages id="exportarMessages" />
+
+				<p:defaultCommand target="exportaReservaCommandButton" scope="exportarReservasDialog" />
 				<h:panelGrid id="confirmatioExportarReservasPanelGrid" columns="2">
 
 					<p:outputLabel value="Nome: " for="exportarDialogNome" />
@@ -182,22 +181,24 @@
 
 					<p:outputLabel value="Telefone: " for="exportarDialogTelefone" />
 					<p:inputText id="exportarDialogTelefone" size="80" maxlength="100"
-						value="#{gestaoHistoricoReservaCarrosBean.usuario.nome}"
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.telefone}"
 						required="true" />
 
 					<p:outputLabel value="Data Cadastro: "
 						for="exportarDialogDataCadastro" />
 					<p:datePicker id="exportarDialogDataCadastro" pattern="dd/MM/yyyy"
-						value="#{gestaoHistoricoReservaCarrosBean.usuario.dataNasc}"
+						value="#{gestaoHistoricoReservaCarrosBean.usuario.dadosCadastro.dataCriacao}"
 						locale="br" monthNavigator="true" yearNavigator="true"
 						showIcon="true" required="true" />
 				</h:panelGrid>
 
 				<p:commandButton id="exportaReservaCommandButton"
 					value="Exportar PDF" styleClass="commandButtonUsuario"
-					actionListener="#{gestaoHistoricoReservaCarrosBean.exportarPorUsuario()}"
-					oncomplete="PF('exportarReservasDialogWidgetVar').hide()"
-					update="exportarReservasDialog" process="exportarReservasDialog" />
+					oncomplete="if (!args.validationFailed) PF('exportarReservasDialogWidgetVar').hide()"
+					update="confirmatioExportarReservasPanelGrid exportarMessages" process="exportarReservasDialog" >
+						<p:fileDownload
+							value="#{gestaoHistoricoReservaCarrosBean.exportarPorUsuario()}" />
+					</p:commandButton>
 
 			</p:dialog>
 		</h:form>

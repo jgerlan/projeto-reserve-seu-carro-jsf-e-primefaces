@@ -14,9 +14,13 @@ import javax.persistence.criteria.Root;
 
 import com.projetoes.ecommerce.model.FiltroListarHistoricoReservaCarros;
 import com.projetoes.ecommerce.model.HistoricoReservaCarro;
+import com.projetoes.ecommerce.util.DateTimeExtensions;
 
 public class HistoricoReservaCarroDAO extends RepositorioCRUD<HistoricoReservaCarro, Long> {
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private DateTimeExtensions dtExtensions;
 
 	@Inject
 	public HistoricoReservaCarroDAO(EntityManager entityManager) {
@@ -47,6 +51,24 @@ public class HistoricoReservaCarroDAO extends RepositorioCRUD<HistoricoReservaCa
 			return null;
 		}
 	}
+	
+	public List<HistoricoReservaCarro> listarPorUsuarioId(Long id){
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<HistoricoReservaCarro> criteriaQuery = criteriaBuilder.createQuery(HistoricoReservaCarro.class);
+		Root<HistoricoReservaCarro> entityRoot = criteriaQuery.from(HistoricoReservaCarro.class);
+
+		Predicate predicate = criteriaBuilder.conjunction();
+
+		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(entityRoot.get("usuario").get("id"), id));
+		
+		criteriaQuery.where(predicate);
+
+		try {
+			return getEntityManager().createQuery(criteriaQuery).getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	public void excluirPorCarroId(Long carroId) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -69,6 +91,35 @@ public class HistoricoReservaCarroDAO extends RepositorioCRUD<HistoricoReservaCa
 
 		getEntityManager().createQuery(delete).executeUpdate();
 	}
+	
+	public List<HistoricoReservaCarro> buscarPorNomeTelefoneDataCadastro(String nome, String telefone, Date dataCadastro) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<HistoricoReservaCarro> criteriaQuery = criteriaBuilder.createQuery(HistoricoReservaCarro.class);
+		Root<HistoricoReservaCarro> entityRoot = criteriaQuery.from(HistoricoReservaCarro.class);
+
+		Predicate predicate = criteriaBuilder.conjunction();
+
+		predicate = criteriaBuilder.and(predicate,
+				criteriaBuilder.like(criteriaBuilder.lower(entityRoot.get("usuario").get("nome")), "%" + nome.toLowerCase() + "%"));
+
+		String telefoneAux = telefone.replaceAll("\\D", "");
+		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(entityRoot.get("usuario").get("telefone"), telefoneAux));
+		
+		Date truncatedDataCadastro = dtExtensions.truncateToDay(dataCadastro);
+		
+		predicate = criteriaBuilder.and(predicate,
+	            criteriaBuilder.greaterThanOrEqualTo(entityRoot.get("usuario").get("dadosCadastro").get("dataCriacao"), truncatedDataCadastro),
+	            criteriaBuilder.lessThan(entityRoot.get("usuario").get("dadosCadastro").get("dataCriacao"),
+	            		dtExtensions.addDays(truncatedDataCadastro, 1)));
+
+		criteriaQuery.where(predicate);
+
+		try {
+			return getEntityManager().createQuery(criteriaQuery).getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	public List<HistoricoReservaCarro> listarPorFiltros(FiltroListarHistoricoReservaCarros filtro) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -79,12 +130,12 @@ public class HistoricoReservaCarroDAO extends RepositorioCRUD<HistoricoReservaCa
 
 		if (filtro.getLogin() != null && !filtro.getLogin().isEmpty()) {
 			predicate = criteriaBuilder.and(predicate, criteriaBuilder
-					.like(criteriaBuilder.lower(entityRoot.get("login")), "%" + filtro.getLogin().toLowerCase() + "%"));
+					.like(criteriaBuilder.lower(entityRoot.get("usuario").get("login")), "%" + filtro.getLogin().toLowerCase() + "%"));
 		}
 
 		if (filtro.getTelefone() != null && !filtro.getTelefone().isEmpty()) {
 			predicate = criteriaBuilder.and(predicate,
-					criteriaBuilder.equal(entityRoot.get("telefone"), filtro.getTelefone()));
+					criteriaBuilder.equal(entityRoot.get("usuario").get("telefone"), filtro.getTelefone()));
 		}
 
 		if (filtro.getDataReservaInicio() != null) {
@@ -129,12 +180,12 @@ public class HistoricoReservaCarroDAO extends RepositorioCRUD<HistoricoReservaCa
 
 		if (filtro.getValorInicio() > 0) {
 			predicate = criteriaBuilder.and(predicate,
-					criteriaBuilder.greaterThanOrEqualTo(entityRoot.get("valor"), filtro.getValorInicio()));
+					criteriaBuilder.greaterThanOrEqualTo(entityRoot.get("carro").get("valor"), filtro.getValorInicio()));
 		}
 
 		if (filtro.getValorFim() > 0) {
 			predicate = criteriaBuilder.and(predicate,
-					criteriaBuilder.lessThanOrEqualTo(entityRoot.get("valor"), filtro.getValorFim()));
+					criteriaBuilder.lessThanOrEqualTo(entityRoot.get("carro").get("valor"), filtro.getValorFim()));
 		}
 
 		criteriaQuery.where(predicate);

@@ -23,7 +23,7 @@ import com.projetoes.ecommerce.respository.CarroDAO;
 import com.projetoes.ecommerce.respository.HistoricoReservaCarroDAO;
 import com.projetoes.ecommerce.respository.UsuarioDAO;
 import com.projetoes.ecommerce.service.CadastroCarroService;
-import com.projetoes.ecommerce.service.CadastroHistoricoReservaCarrosService;
+import com.projetoes.ecommerce.service.HistoricoReservaCarrosService;
 import com.projetoes.ecommerce.util.FacesMessages;
 
 @Named
@@ -42,7 +42,7 @@ public class GestaoCarrosBean implements Serializable {
 	private HistoricoReservaCarroDAO historicoReservaCarros;
 
 	@Inject
-	private CadastroHistoricoReservaCarrosService historicosReservaCarrosService;
+	private HistoricoReservaCarrosService historicosReservaCarrosService;
 
 	@Inject
 	private CadastroCarroService cadastroCarroService;
@@ -208,9 +208,6 @@ public class GestaoCarrosBean implements Serializable {
 			historicoReservaCarro.setUsuario(usuarioReserva);
 			historicoReservaCarro.setCarro(this.carro);
 			historicoReservaCarro.setDataReserva(new Date());
-			historicoReservaCarro.setLogin(usuarioReserva.getLogin());
-			historicoReservaCarro.setTelefone(usuarioReserva.getTelefone());
-			historicoReservaCarro.setValor(this.carro.getValor());
 
 			historicosReservaCarrosService.salvar(historicoReservaCarro, this.carro);
 
