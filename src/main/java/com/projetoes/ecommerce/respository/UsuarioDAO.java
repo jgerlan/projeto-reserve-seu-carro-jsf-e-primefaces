@@ -84,6 +84,27 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 			return null;
 		}
 	}
+	
+	public Usuario validarLoginESenha(String login, String senha) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
+		Root<Usuario> usuarioRoot = criteriaQuery.from(Usuario.class);
+
+		Predicate predicate = criteriaBuilder.conjunction();
+
+		predicate = criteriaBuilder.and(predicate,
+				criteriaBuilder.like(criteriaBuilder.lower(usuarioRoot.get("login")), login.toLowerCase()));
+
+		predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(usuarioRoot.get("senha"), senha));
+
+		criteriaQuery.where(predicate);
+
+		try {
+			return getEntityManager().createQuery(criteriaQuery).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	public List<Usuario> listarPorFiltros(FiltroListarUsuarios filtro) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();

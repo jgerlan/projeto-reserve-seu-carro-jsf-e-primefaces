@@ -46,7 +46,7 @@ public class GestaoCarrosBean implements Serializable {
 
 	@Inject
 	private CadastroCarroService cadastroCarroService;
-
+	
 	@Inject
 	private FacesMessages messages;
 

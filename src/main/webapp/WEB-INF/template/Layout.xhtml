@@ -23,7 +23,7 @@
 							name="reserve-seu-carro-logo-texto.png" />
 					</p:menuitem>
 					<p:menuitem action="#{gestaoHomeBean.index}" value="Home" />
-					<p:submenu label="Administração">
+					<p:submenu label="Administração" rendered="#{loginBean.isLoggedIn()}">
 						<p:menuitem action="#{gestaoHomeBean.gestaoUsuarios}" value="Gestão Usuários" />
 						<p:menuitem action="#{gestaoHomeBean.gestaoCarros}" value="Gestão Carros" />
 						<p:menuitem action="#{gestaoHomeBean.gestaoHistoricoReservaCarros}" value="Gestão Histórico reserva de carros" />
@@ -31,10 +31,14 @@
 
 					<f:facet name="options" id="options">
 						<p:button href="login.xhtml" value="Login" icon="pi pi-fw pi-sign-in"
-							styleClass="ui-button-info" />
+							styleClass="ui-button-info" rendered="#{loginBean.isNotLoggedIn()}"/>
+						
+						<p:commandButton id="logout-button" title="Logout"
+									value="Logout" icon="pi pi-fw pi-sign-out" process="@this"
+									action="#{loginBean.logout}" rendered="#{loginBean.isLoggedIn()}" />
 
-						<p:button href= "cadastro.xhtml" value="Crie sua conta" icon="pi pi-fw pi-user-plus"
-							styleClass="ui-button-info" />
+						<!-- <p:button href= "cadastro.xhtml" value="Crie sua conta" icon="pi pi-fw pi-user-plus"
+							styleClass="ui-button-info" /> -->
 					</f:facet>
 				</p:menubar>
 			</div>
