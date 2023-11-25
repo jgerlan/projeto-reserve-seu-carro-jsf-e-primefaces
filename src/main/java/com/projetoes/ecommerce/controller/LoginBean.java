@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.projetoes.ecommerce.service.LoginService;
+import com.projetoes.ecommerce.util.SessionUtils;
 
 @Named
 @SessionScoped
@@ -16,7 +17,7 @@ public class LoginBean implements Serializable {
     
     @Inject
     private LoginService loginService;
-
+    
     private String username;
     private String senha;
 
@@ -43,6 +44,14 @@ public class LoginBean implements Serializable {
     
     public boolean isNotLoggedIn() {
     	return !loginService.isLoggedIn();
+    }
+    
+    public String retornaUserName() {
+    	String userName = SessionUtils.getUserName();
+    	if(userName == null)
+    		return "";
+    	
+    	return userName;
     }
     
 	public String getUsername() {

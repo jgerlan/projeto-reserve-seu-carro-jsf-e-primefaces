@@ -62,6 +62,7 @@ public class GestaoUsuariosBean implements Serializable {
 	}
 
 	public void pesquisar() {
+		
 		filtros.setTelefone(filtros.getTelefone().replaceAll("\\D", ""));
 		listaUsuarios = usuarios.listarPorFiltros(filtros);
 	}
@@ -156,10 +157,11 @@ public class GestaoUsuariosBean implements Serializable {
 	}
 
 	private boolean filtroVazio() {
-		return this.filtros.getLogin() != null || !"".equals(this.filtros.getLogin()) || this.filtros.getNome() != null
-				|| !"".equals(this.filtros.getNome()) || this.filtros.getStatus() != null
+		return (this.filtros.getLogin() != null && !"".equals(this.filtros.getLogin()))
+				|| (this.filtros.getNome() != null && !"".equals(this.filtros.getNome()))
+				|| (this.filtros.getTelefone() != null && !"".equals(this.filtros.getTelefone()))
 				|| this.filtros.getTipo() != null || this.filtros.getDeDataNasc() != null
-				|| this.filtros.getAteDataNasc() != null;
+				|| this.filtros.getAteDataNasc() != null || this.filtros.getStatus() != null;
 	}
 	
 	public String getFormattedTelefone(String telefone) {
