@@ -85,7 +85,7 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		}
 	}
 	
-	public Usuario buscarPorNomeEDataNascimento(String nome, Date dataNascimento) {
+	public Usuario buscarPorLoginEDataNascimento(String login, Date dataNascimento) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
 		Root<Usuario> entityRoot = criteriaQuery.from(Usuario.class);
@@ -93,7 +93,7 @@ public class UsuarioDAO extends RepositorioCRUD<Usuario, Long> {
 		Predicate predicate = criteriaBuilder.conjunction();
 
 		predicate = criteriaBuilder.and(predicate,
-				criteriaBuilder.like(criteriaBuilder.lower(entityRoot.get("nome")), "%" + nome.toLowerCase() + "%"));
+				criteriaBuilder.like(criteriaBuilder.lower(entityRoot.get("login")), "%" + login.toLowerCase() + "%"));
 		
 		Date truncatedDataCadastro = dtExtensions.truncateToDay(dataNascimento);
 		

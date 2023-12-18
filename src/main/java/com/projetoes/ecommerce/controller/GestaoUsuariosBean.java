@@ -104,6 +104,7 @@ public class GestaoUsuariosBean implements Serializable {
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("usuarioSalvo", usuarioSalvo);
 			messages.erro("Erro ao salvar usuário!");
+			e.printStackTrace();
 		}
 	}
 
@@ -130,6 +131,7 @@ public class GestaoUsuariosBean implements Serializable {
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("usuarioAtualizado", usuarioAtualizado);
 			messages.erro("Erro ao atualizar usuário!");
+			e.printStackTrace();
 		}
 	}
 	

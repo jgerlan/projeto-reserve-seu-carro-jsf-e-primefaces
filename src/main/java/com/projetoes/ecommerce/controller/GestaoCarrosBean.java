@@ -127,6 +127,7 @@ public class GestaoCarrosBean implements Serializable {
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("carroSalvo", carroSalvo);
 			messages.erro("Erro ao salvar carro!");
+			e.printStackTrace();
 		}
 	}
 
@@ -152,6 +153,7 @@ public class GestaoCarrosBean implements Serializable {
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("carroAtualizado", carroAtualizado);
 			messages.erro("Erro ao atualizar carro!");
+			e.printStackTrace();
 		}
 	}
 

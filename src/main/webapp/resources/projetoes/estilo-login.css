@@ -34,12 +34,18 @@ label {
     margin-bottom: 5px;
 }
 
-input {
+#frm-login input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+#frm-recuperarsenha .recuperaSenhaButton {
+	margin-top: 50px;
+	margin-bottom: 50px;
+    
 }
 
 button {
@@ -84,5 +90,29 @@ button:hover {
 #frm-login button{
 	margin-top: 8px;
 	align-items: center;
+}
+
+#senhaConteudo {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	padding-right: 32px;
+}
+
+#senhaPanelGrid {
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+#confirmarCommandButton {
+	background-color: #4caf50;
+	color: #fff;
+}
+
+.commandButton {
+	top: 50px;
+	float: right;
 }
 
