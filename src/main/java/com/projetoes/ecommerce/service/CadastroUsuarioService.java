@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import com.projetoes.ecommerce.model.Usuario;
+import com.projetoes.ecommerce.respository.HistoricoReservaCarroDAO;
 import com.projetoes.ecommerce.respository.UsuarioDAO;
 import com.projetoes.ecommerce.util.Transacional;
 
@@ -14,6 +15,9 @@ public class CadastroUsuarioService implements Serializable {
 
 	@Inject
 	private UsuarioDAO usuarios;
+	
+	@Inject
+	private HistoricoReservaCarroDAO historicoReservaCarros;
 
 	@Transacional
 	public void salvar(Usuario usuario) {
@@ -27,6 +31,11 @@ public class CadastroUsuarioService implements Serializable {
 
 	@Transacional
 	public void excluir(long id) {
-		usuarios.remover(id);
+		try {
+			historicoReservaCarros.excluirPorUsuarioId(id);
+			usuarios.remover(id);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }

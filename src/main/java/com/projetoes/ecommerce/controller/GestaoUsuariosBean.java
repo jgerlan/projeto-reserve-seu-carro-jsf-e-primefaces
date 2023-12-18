@@ -1,6 +1,7 @@
 package com.projetoes.ecommerce.controller;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -61,6 +62,8 @@ public class GestaoUsuariosBean implements Serializable {
 	}
 
 	public void pesquisar() {
+		
+		filtros.setTelefone(filtros.getTelefone().replaceAll("\\D", ""));
 		listaUsuarios = usuarios.listarPorFiltros(filtros);
 	}
 
@@ -83,6 +86,8 @@ public class GestaoUsuariosBean implements Serializable {
 			dadosCadastroVo.setUsuarioIdAtualizacao(1);
 			dadosCadastroVo.setDataCriacao(new Date());
 			dadosCadastroVo.setDataAtualizacao(new Date());
+			
+			usuario.setTelefone(usuario.getTelefone().replaceAll("\\D", ""));
 			usuario.setDadosCadastro(dadosCadastroVo);
 
 			cadastroUsuarioService.salvar(usuario);
@@ -99,6 +104,7 @@ public class GestaoUsuariosBean implements Serializable {
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("usuarioSalvo", usuarioSalvo);
 			messages.erro("Erro ao salvar usuário!");
+			e.printStackTrace();
 		}
 	}
 
@@ -125,6 +131,7 @@ public class GestaoUsuariosBean implements Serializable {
 		} catch (Exception e) {
 			PrimeFaces.current().ajax().addCallbackParam("usuarioAtualizado", usuarioAtualizado);
 			messages.erro("Erro ao atualizar usuário!");
+			e.printStackTrace();
 		}
 	}
 	
@@ -152,11 +159,27 @@ public class GestaoUsuariosBean implements Serializable {
 	}
 
 	private boolean filtroVazio() {
-		return this.filtros.getLogin() != null && !"".equals(this.filtros.getLogin()) && this.filtros.getNome() != null
-				&& !"".equals(this.filtros.getNome()) && this.filtros.getStatus() != null
-				&& this.filtros.getTipo() != null && this.filtros.getDeDataNasc() != null
-				&& this.filtros.getAteDataNasc() != null;
+		return (this.filtros.getLogin() != null && !"".equals(this.filtros.getLogin()))
+				|| (this.filtros.getNome() != null && !"".equals(this.filtros.getNome()))
+				|| (this.filtros.getTelefone() != null && !"".equals(this.filtros.getTelefone()))
+				|| this.filtros.getTipo() != null || this.filtros.getDeDataNasc() != null
+				|| this.filtros.getAteDataNasc() != null || this.filtros.getStatus() != null;
 	}
+	
+	public String getFormattedTelefone(String telefone) {
+        if (!telefone.isEmpty()) {
+            // Remove non-digit characters
+            String cleaned = telefone.replaceAll("\\D", "");
+
+            // Apply the custom phone number format (99) 9 9999-9999
+            return MessageFormat.format("({0}) {1} {2}-{3}",
+                    cleaned.substring(0, 2),
+                    cleaned.substring(2, 3),
+                    cleaned.substring(3, 7),
+                    cleaned.substring(7));
+        }
+        return "";
+    }
 
 	public Usuario getUsuario() {
 		return usuario;

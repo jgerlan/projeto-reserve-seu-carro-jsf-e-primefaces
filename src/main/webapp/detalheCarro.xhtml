@@ -12,9 +12,12 @@
 
 	<ui:define name="conteudo">
 
-		<h:form>
+		<h:form id="frm-detalheCarro">
+			<p:messages id="messages" closable="true">
+				<p:autoUpdate />
+			</p:messages>
 			<p:commandButton icon="pi pi-chevron-left"
-				action="#{gestaoHomeBean.index}" title="Voltar">
+				action="#{gestaoHomeBean.index}" title="Voltar" process="@this">
 			</p:commandButton>
 			<div class="info-container">
 				<div class="car-info">
@@ -32,11 +35,38 @@
 					<h2>Sua reserva</h2>
 					<p>Clique no botão abaixo para confirmar:</p>
 
-					<p:commandButton type="button" value="Confirmar Reserva"
-						styleClass="ui-button-success" />
+					<p:commandButton id="reserveCommandButton" title="Reservar"
+						value="Reservar" styleClass="ui-button-success"
+						oncomplete="PF('confirmationDialogWidgetVar').show();"
+						update=":frm-detalheCarro:confirmationDialog" process="@this">
+						<p:resetInput target="confirmationDialog" />
+					</p:commandButton>
 				</div>
 			</div>
 
+			<p:dialog id="confirmationDialog"
+				widgetVar="confirmationDialogWidgetVar" styleClass="inputsPart"
+				header="Confirmação de reserva" modal="true" showEffect="fade"
+				draggable="false" hideEffect="fade">
+				<h:panelGrid id="confirmatioUsuarioPanelGrid" columns="2">
+
+					<p:outputLabel value="Nome: " for="usuarioDialogNome" />
+					<p:inputText id="usuarioDialogNome" size="80" maxlength="100"
+						value="#{gestaoCarrosBean.usuario.nome}" required="true" />
+
+					<p:outputLabel for="usuarioDialogTelefone" value="Telefone: " />
+					<p:inputMask id="usuarioDialogTelefone"
+						value="#{gestaoCarrosBean.usuario.telefone}"
+						mask="(99) 9 9999-9999" required="true" />
+				</h:panelGrid>
+
+				<p:commandButton id="confirmaReservaCommandButton" value="Reservar"
+					styleClass="commandButtonUsuario"
+					actionListener="#{gestaoCarrosBean.reservarCarro()}"
+					oncomplete="PF('confirmationDialogWidgetVar').hide()"
+					update="confirmationDialog" process="confirmationDialog" />
+
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

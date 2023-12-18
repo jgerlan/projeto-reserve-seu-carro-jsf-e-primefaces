@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import com.projetoes.ecommerce.model.Carro;
 import com.projetoes.ecommerce.respository.CarroDAO;
+import com.projetoes.ecommerce.respository.HistoricoReservaCarroDAO;
 import com.projetoes.ecommerce.util.Transacional;
 
 public class CadastroCarroService implements Serializable {
@@ -15,13 +16,26 @@ public class CadastroCarroService implements Serializable {
 	@Inject
 	private CarroDAO carros;
 	
+	@Inject
+	private HistoricoReservaCarroDAO historicoReservaCarros;
+	
 	@Transacional
 	public void salvar(Carro carro) {
 		carros.guardar(carro);
 	}
 	
 	@Transacional
+	public void atualizar(Carro carro) {
+		carros.guardar(carro);
+	}
+	
+	@Transacional
 	public void excluir(long id) {
-		carros.remover(id);
+		try {
+			historicoReservaCarros.excluirPorCarroId(id);
+			carros.remover(id);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }

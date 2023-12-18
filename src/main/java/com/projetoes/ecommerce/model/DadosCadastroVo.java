@@ -13,49 +13,49 @@ public class DadosCadastroVo {
 	{ }
 	
 	@Column(nullable = false, name = "usuarioid_criacao")
-	private long UsuarioIdCriacao;
+	private long usuarioIdCriacao;
 	
 	@Column(nullable = false, name = "usuarioid_atualizacao")
-	private long UsuarioIdAtualizacao;
+	private long usuarioIdAtualizacao;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, name = "data_criacao")
-	private Date DataCriacao;
+	private Date dataCriacao;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, name = "data_atualizacao")
-	private Date DataAtualizacao;
+	private Date dataAtualizacao;
 
 	public long getUsuarioIdCriacao() {
-		return UsuarioIdCriacao;
+		return usuarioIdCriacao;
 	}
 
 	public void setUsuarioIdCriacao(long usuarioIdCriacao) {
-		UsuarioIdCriacao = usuarioIdCriacao;
+		this.usuarioIdCriacao = usuarioIdCriacao;
 	}
 
 	public long getUsuarioIdAtualizacao() {
-		return UsuarioIdAtualizacao;
+		return usuarioIdAtualizacao;
 	}
 
 	public void setUsuarioIdAtualizacao(long usuarioIdAtualizacao) {
-		UsuarioIdAtualizacao = usuarioIdAtualizacao;
+		this.usuarioIdAtualizacao = usuarioIdAtualizacao;
 	}
 
 	public Date getDataCriacao() {
-		return DataCriacao;
+		return dataCriacao;
 	}
 
 	public void setDataCriacao(Date dataCriacao) {
-		DataCriacao = dataCriacao;
+		this.dataCriacao = dataCriacao;
 	}
 
 	public Date getDataAtualizacao() {
-		return DataAtualizacao;
+		return dataAtualizacao;
 	}
 
 	public void setDataAtualizacao(Date dataAtualizacao) {
-		DataAtualizacao = dataAtualizacao;
+		this.dataAtualizacao = dataAtualizacao;
 	}
 	
 	

@@ -17,7 +17,7 @@
 		</f:metadata>
 
 		<h:form id="frm-usuarios">
-			<p:messages id="messages" closable="true" >
+			<p:messages id="messages" closable="true">
 				<p:autoUpdate />
 			</p:messages>
 			<p:panel id="painelBusca" header="Busca">
@@ -34,7 +34,14 @@
 							<p:inputText id="busca-nome"
 								value="#{gestaoUsuariosBean.filtros.nome}" label="Nome" />
 						</p:column>
-
+						
+						<p:column>
+							<p:outputLabel for="busca-telefone" value="Telefone: " />
+							<p:inputMask id="busca-telefone"
+								value="#{gestaoUsuariosBean.filtros.telefone}"
+								mask="(99) 9 9999-9999" />
+						</p:column>
+						
 						<p:column>
 							<p:outputLabel for="busca-dedatanasc"
 								value="Data nascimento de: " />
@@ -117,8 +124,14 @@
 					<h:outputText value="#{usuario.nome}" />
 				</p:column>
 				
+				<p:column headerText="Telefone" sortBy="#{usuario.telefone}">
+					<h:outputText value="#{gestaoUsuariosBean.getFormattedTelefone(usuario.telefone)}" />
+				</p:column>
+
 				<p:column headerText="Data nascimento" sortBy="#{usuario.dataNasc}">
-					<h:outputText value="#{usuario.dataNasc}" />
+					<h:outputText value="#{usuario.dataNasc}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Satus" sortBy="#{usuario.status}">
@@ -175,6 +188,11 @@
 						<f:validateRegex
 							pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
 					</p:inputText>
+
+					<p:outputLabel for="usuarioDialogTelefone" value="Telefone: " />
+					<p:inputMask id="usuarioDialogTelefone"
+						value="#{gestaoUsuariosBean.usuario.telefone}"
+						mask="(99) 9 9999-9999" required="true" />
 
 					<p:outputLabel value="Data Nascimento: "
 						for="usuarioDialogDataNascimento" />
